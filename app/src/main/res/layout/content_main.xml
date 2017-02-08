@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.semistone.androidapp.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <!--App Logo-->
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_above="@+id/beneficiaries_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_loving" />
+
+    <!--Beneficiaries-->
+    <LinearLayout
+        android:id="@+id/beneficiaries_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/app_logo"
+            android:layout_marginBottom="@dimen/card_view_vertical_margin"
+            android:layout_marginLeft="@dimen/card_view_horizontal_margin"
+            android:layout_marginRight="@dimen/card_view_horizontal_margin"
+            android:layout_marginTop="@dimen/card_view_vertical_margin"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            card_view:cardCornerRadius="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--Image-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/colorPrimary"></View>
+
+                <!--Divider-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/card_view_inner_horizontal_margin"
+                    android:layout_marginRight="@dimen/card_view_inner_horizontal_margin"
+                    android:layout_marginTop="@dimen/card_view_inner_vertical_margin"
+                    android:layout_marginBottom="@dimen/card_view_inner_vertical_margin">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorDivider" />
+                </LinearLayout>
+
+                <!--Description-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/card_view_inner_horizontal_margin"
+                    android:layout_marginRight="@dimen/card_view_inner_horizontal_margin"
+                    android:layout_marginTop="@dimen/card_view_inner_vertical_margin"
+                    android:layout_marginBottom="@dimen/card_view_inner_vertical_margin"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryText"
+                        android:text="@string/save_animal_title"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorSecondaryText"
+                        android:text="@string/save_animal_description"/>
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <!--TextView TAP TO DONATE-->
+    <TextView
+        android:id="@+id/tv_tap_to_donate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/beneficiaries_layout"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/tap_to_donate"
+        android:textStyle="italic" />
+
+</RelativeLayout>

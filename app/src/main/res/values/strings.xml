@@ -1,3 +1,33 @@
 <resources>
-    <string name="app_name">AndroidApp</string>
+    <!--app name-->
+    <string name="app_name">Donate.ly</string>
+
+    <!--onboaderpage-->
+    <string name="onboaderpage1_title">Donate easily</string>
+    <string name="onboaderpage1_description">You can easily donate anytime, anywhere.</string>
+    <string name="onboaderpage2_title">Watch Ads</string>
+    <string name="onboaderpage2_description">Just, watch advertisements and donate.</string>
+    <string name="onboaderpage3_title">Free</string>
+    <string name="onboaderpage3_description">Don\'t worry, everything is free.</string>
+
+    <!--beneficiaries description-->
+    <string name="save_animal_title">SAVE ANIMAL</string>
+    <string name="save_animal_description">There is a lot of abandoned or mistreated animals. They need your help.</string>
+    <string name="tap_to_donate">TAP TO DONATE</string>
+
+    <!--user info-->
+    <string name="default_user_id">android.studio@android.com</string>
+    <string name="default_user_name">Android Studio</string>
+
+    <!--menu-->
+    <string name="action_settings">Settings</string>
+
+    <!--drawer-->
+    <string name="nav_donate_title">Donate</string>
+    <string name="nav_history_title">History</string>
+    <string name="nav_settings_title">Settings</string>
+    <string name="nav_about_title">About</string>
+    <string name="nav_share_title">Share</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

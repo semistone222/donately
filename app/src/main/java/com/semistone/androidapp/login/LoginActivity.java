@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: 2017-02-09
+    // TODO: 2017-02-09 설정 창에서 로그아웃 하도록
     @OnClick(R.id.facebook_logout)
     void onClickFacebookLogout(View view) {
         LoginManager.getInstance().logOut();
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: 2017-02-09
+    // TODO: 2017-02-09 구글 로그인 추가
     @OnClick(R.id.google_login)
     void onClickGoogleLogin(View view) {
         Snackbar.make(view, "Coming soon.", Toast.LENGTH_SHORT).show();

@@ -32,12 +32,21 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!--login-->
-    <string name="facebook_app_id">389316754760661</string>
+    <string name="facebook_app_id" translatable="false">389316754760661</string>
     <string name="title_activity_settings">Settings</string>
     <string name="facebook_login">Log in with Facebook</string>
     <string name="google_login">Log in with Google</string>
 
+    <!--activity-->
+    <string name="title_activity_history">History</string>
+
+    <!--notification-->
+    <string name="pref_notification_key" translatable="false">notification</string>
+    <string name="encourage_donation_notification_title">Time\'s up!</string>
+    <string name="encourage_donation_notification_body">Are you ready to Donate.ly?</string>
+
     <!--toast messages-->
+    <string name="message_history">These are records you donated.</string>
     <string name="login_canceled">login canceled.</string>
     <string name="login_error">login error.</string>
 </resources>

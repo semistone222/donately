@@ -1,5 +1,6 @@
 package com.semistone.androidapp.data;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -8,6 +9,8 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class History extends RealmObject {
+    public static final String ID = "historyId";
+    public static final String DONATE_DATE = "donateDate";
 
     @PrimaryKey
     private int historyId;
@@ -19,6 +22,19 @@ public class History extends RealmObject {
     private String beneficiary;
 
     private int point;
+
+    public static int getNextKey(Realm realm) {
+
+        int id;
+
+        try {
+            id = realm.where(History.class).max(History.ID).intValue() + 1;
+        } catch (Exception e) {
+            id = 0;
+        }
+
+        return id;
+    }
 
     public int getHistoryId() {
         return historyId;

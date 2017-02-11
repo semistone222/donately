@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.semistone.androidapp.R;
 import com.semistone.androidapp.data.User;
+import com.semistone.androidapp.history.HistoryActivity;
 import com.semistone.androidapp.login.LoginActivity;
 
 import butterknife.BindView;
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_donate) {
 
         } else if (id == R.id.nav_history) {
-
+            startActivity(new Intent(MainActivity.this, HistoryActivity.class));
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_about) {

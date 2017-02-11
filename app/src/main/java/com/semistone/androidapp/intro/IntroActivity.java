@@ -1,10 +1,14 @@
-package com.semistone.androidapp;
+package com.semistone.androidapp.intro;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.chyrta.onboarder.OnboarderActivity;
 import com.chyrta.onboarder.OnboarderPage;
+import com.semistone.androidapp.R;
+import com.semistone.androidapp.login.LoginActivity;
+import com.semistone.androidapp.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +22,10 @@ public class IntroActivity extends OnboarderActivity {
         super.onCreate(savedInstanceState);
         onboarderPages = new ArrayList<OnboarderPage>();
 
-        // Create pages
         OnboarderPage onboarderPage1 = new OnboarderPage(R.string.onboaderpage1_title, R.string.onboaderpage1_description, R.drawable.ic_loving);
         OnboarderPage onboarderPage2 = new OnboarderPage(R.string.onboaderpage2_title, R.string.onboaderpage2_description, R.drawable.ic_video_play);
         OnboarderPage onboarderPage3 = new OnboarderPage(R.string.onboaderpage3_title, R.string.onboaderpage3_description, R.drawable.ic_free);
 
-        // setting
         onboarderPage1.setTitleColor(R.color.white);
         onboarderPage1.setDescriptionColor(R.color.white);
         onboarderPage1.setBackgroundColor(R.color.colorPrimaryDark);
@@ -36,25 +38,23 @@ public class IntroActivity extends OnboarderActivity {
         onboarderPage3.setDescriptionColor(R.color.white);
         onboarderPage3.setBackgroundColor(R.color.colorPrimaryDark);
 
-        // add pages
         onboarderPages.add(onboarderPage1);
         onboarderPages.add(onboarderPage2);
         onboarderPages.add(onboarderPage3);
 
-        // And pass pages to 'setOnboardPagesReady' method
         setOnboardPagesReady(onboarderPages);
 
+        setDividerVisibility(View.GONE);
+        shouldUseFloatingActionButton(true);
     }
 
     @Override
     public void onSkipButtonPressed() {
-        // Optional: by default it skips onboarder to the end
         super.onSkipButtonPressed();
     }
 
     @Override
     public void onFinishButtonPressed() {
-        startActivity(new Intent(IntroActivity.this, MainActivity.class));
+        startActivity(new Intent(IntroActivity.this, LoginActivity.class));
     }
-
 }

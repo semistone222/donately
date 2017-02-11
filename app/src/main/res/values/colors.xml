@@ -3,8 +3,10 @@
     <color name="colorPrimary">#FFC107</color>
     <color name="colorPrimaryLight">#FFE082</color>
     <color name="colorPrimaryDark">#FFA000</color>
-    <color name="colorAccent">#FFE57F</color>
+    <color name="colorAccent">#292929</color>
     <color name="colorDivider">#ededed</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#BDBDBD</color>
+    <color name="facebook">#3b5998</color>
+    <color name="google">#d34836</color>
 </resources>

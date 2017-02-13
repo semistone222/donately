@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 25
@@ -34,4 +35,5 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'io.realm:android-adapters:1.4.0'
     compile 'com.android.support:preference-v7:25.0.1'
+    compile 'com.google.android.gms:play-services-auth:8.3.0'
 }

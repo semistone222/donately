@@ -42,14 +42,9 @@
 
     <!--test-->
     <Button
-        android:id="@+id/facebook_logout"
+        android:id="@+id/gotomainactivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="facebook_logout"/>
-
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:text="메인액티비티로"/>
 
 </RelativeLayout>

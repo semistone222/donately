@@ -1,11 +1,9 @@
 package com.semistone.donately.login;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -16,6 +14,12 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.semistone.donately.R;
 import com.semistone.donately.data.User;
 import com.semistone.donately.main.MainActivity;
@@ -24,19 +28,17 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+
+    private static final int RC_SIGN_IN = 9001;
 
     private CallbackManager mCallbackManager;
-
+    private GoogleApiClient mGoogleApiClient;
     private Realm mRealm;
-
-    @BindView(R.id.test)
-    protected TextView tv_test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +51,14 @@ public class LoginActivity extends AppCompatActivity {
         if (mRealm.where(User.class).findAll().size() != 0) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
         }
+
+        setUpFacebookLogin();
+        setUpGoogleLogin();
     }
 
-    // TODO: 2017-02-09 구글 로그인 추가
-    @OnClick(R.id.google_login)
-    void onClickGoogleLogin(View view) {
-        Snackbar.make(view, "Coming soon.", Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick(R.id.facebook_login)
-    void onClickFacebookLogin(View view) {
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
+    private void setUpFacebookLogin() {
         mCallbackManager = CallbackManager.Factory.create();
-
-        LoginManager loginManager = LoginManager.getInstance();
-        loginManager.logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
-        loginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
 
@@ -77,7 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                         String name = object.optString("name");
                         String email = object.optString("email");
                         String accessToken = loginResult.getAccessToken().getToken();
-                        String type = User.FACEBOOK;
+                        String type = "facebook";
+                        String photoUrl = "https://graph.facebook.com/" + id + "/picture?type=large";
 
                         mRealm.beginTransaction();
                         User user = mRealm.createObject(User.class, id);
@@ -85,11 +79,10 @@ public class LoginActivity extends AppCompatActivity {
                         user.setEmail(email);
                         user.setAccessToken(accessToken);
                         user.setType(type);
+                        user.setPhotoUrl(photoUrl);
                         mRealm.commitTransaction();
 
-                        // test
-                        tv_test.setText(user.toString());
-
+                        // TODO: 2017-02-13 액티비티 순서
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
                 });
@@ -112,10 +105,76 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void setUpGoogleLogin() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @OnClick(R.id.google_login)
+    void onClickGoogleLogin(View view) {
+        Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(intent, RC_SIGN_IN);
+    }
+
+    @OnClick(R.id.facebook_login)
+    void onClickFacebookLogin(View view) {
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        } else {
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            GoogleSignInAccount acct = result.getSignInAccount();
+
+            String id = acct.getId();
+            String name = acct.getDisplayName();
+            String email =  acct.getEmail();
+            String accessToken = acct.getIdToken();
+            String type = User.GOOGLE;
+            String photoUrl = acct.getPhotoUrl().toString();
+
+            mRealm.beginTransaction();
+            User user = mRealm.createObject(User.class, id);
+            user.setName(name);
+            user.setEmail(email);
+            user.setAccessToken(accessToken);
+            user.setType(type);
+            user.setPhotoUrl(photoUrl);
+            mRealm.commitTransaction();
+
+            // TODO: 2017-02-13 액티비티 순서
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // TEST
+    @OnClick(R.id.gotomainactivity)
+    protected void onClickGoToMainActivity(View view) {
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override

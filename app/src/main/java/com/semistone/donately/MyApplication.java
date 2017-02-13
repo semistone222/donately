@@ -10,6 +10,8 @@ import io.realm.Realm;
 
 public class MyApplication extends Application {
 
+    int a;
+
     @Override
     public void onCreate() {
         super.onCreate();

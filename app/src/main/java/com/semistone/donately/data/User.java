@@ -1,5 +1,7 @@
 package com.semistone.donately.data;
 
+import android.net.Uri;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -24,6 +26,8 @@ public class User extends RealmObject {
 
     private String type;
 
+    private String photoUrl;
+
     @Override
     public String toString() {
         return "User{" +
@@ -32,6 +36,7 @@ public class User extends RealmObject {
                 ", email='" + email + '\'' +
                 ", accessToken='" + accessToken + '\'' +
                 ", type='" + type + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
                 '}';
     }
 
@@ -73,5 +78,13 @@ public class User extends RealmObject {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

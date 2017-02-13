@@ -10,6 +10,8 @@ import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.SwitchPreferenceCompat;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.semistone.donately.MyApplication;
 import com.semistone.donately.R;
 import com.semistone.donately.background.NotificationReceiver;
 import com.semistone.donately.data.User;
@@ -51,6 +53,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         LoginManager.getInstance().logOut();
                         break;
                     case User.GOOGLE:
+                        //Auth.GoogleSignInApi.signOut(MyApplication.)
                         break;
                     default:
                         break;
@@ -63,7 +66,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     }
                 });
 
-                // TODO: 2017-02-13 쌓여있던 액티비티 다 꺼지고 로그인 화면으로 돌아가도록
+                // TODO: 2017-02-13 액티비티 순서
                 startActivity(new Intent(getActivity(), LoginActivity.class));
 
                 return true;

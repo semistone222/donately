@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
-import com.semistone.donately.login.LoginActivity;
 import com.semistone.donately.settings.SettingsActivity;
 
 import butterknife.BindView;
@@ -67,8 +66,9 @@ public class MainActivity extends AppCompatActivity
 
         ((TextView) mNavHeader.findViewById(R.id.tv_user_name)).setText(mUser.getName());
         ((TextView) mNavHeader.findViewById(R.id.tv_user_email)).setText(mUser.getEmail());
+
         Glide.with(this)
-                .load("https://graph.facebook.com/" + mUser.getId() + "/picture?type=large")
+                .load(mUser.getPhotoUrl())
                 .bitmapTransform(new CropCircleTransformation(this))
                 .placeholder(R.drawable.ic_face_black_24dp)
                 .error(R.drawable.ic_report_black_24dp)

@@ -1,4 +1,4 @@
-package com.semistone.androidapp.utility;
+package com.semistone.donately.utility;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

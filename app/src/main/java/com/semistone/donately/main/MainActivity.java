@@ -1,4 +1,4 @@
-package com.semistone.androidapp.main;
+package com.semistone.donately.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.semistone.androidapp.R;
-import com.semistone.androidapp.data.User;
-import com.semistone.androidapp.history.HistoryActivity;
-import com.semistone.androidapp.login.LoginActivity;
+import com.semistone.donately.R;
+import com.semistone.donately.data.User;
+import com.semistone.donately.history.HistoryActivity;
+import com.semistone.donately.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

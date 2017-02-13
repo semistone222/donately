@@ -1,4 +1,4 @@
-package com.semistone.androidapp.background;
+package com.semistone.donately.background;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

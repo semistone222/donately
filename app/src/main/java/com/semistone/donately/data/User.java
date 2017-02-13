@@ -1,4 +1,4 @@
-package com.semistone.androidapp.data;
+package com.semistone.donately.data;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

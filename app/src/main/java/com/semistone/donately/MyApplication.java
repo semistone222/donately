@@ -1,4 +1,4 @@
-package com.semistone.androidapp;
+package com.semistone.donately;
 
 import android.app.Application;
 

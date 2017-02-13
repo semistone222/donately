@@ -1,4 +1,4 @@
-package com.semistone.androidapp.login;
+package com.semistone.donately.login;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -16,9 +16,9 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.semistone.androidapp.R;
-import com.semistone.androidapp.data.User;
-import com.semistone.androidapp.main.MainActivity;
+import com.semistone.donately.R;
+import com.semistone.donately.data.User;
+import com.semistone.donately.main.MainActivity;
 
 import org.json.JSONObject;
 

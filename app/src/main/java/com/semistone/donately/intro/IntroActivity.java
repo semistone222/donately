@@ -1,4 +1,4 @@
-package com.semistone.androidapp.intro;
+package com.semistone.donately.intro;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,8 @@ import android.view.View;
 
 import com.chyrta.onboarder.OnboarderActivity;
 import com.chyrta.onboarder.OnboarderPage;
-import com.semistone.androidapp.R;
-import com.semistone.androidapp.login.LoginActivity;
-import com.semistone.androidapp.main.MainActivity;
+import com.semistone.donately.R;
+import com.semistone.donately.login.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;

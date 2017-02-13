@@ -1,12 +1,12 @@
-package com.semistone.androidapp.background;
+package com.semistone.donately.background;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.semistone.androidapp.R;
-import com.semistone.androidapp.utility.AlarmUtils;
+import com.semistone.donately.R;
+import com.semistone.donately.utility.AlarmUtils;
 
 public class BootService extends IntentService {
 

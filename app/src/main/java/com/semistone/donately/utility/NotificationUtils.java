@@ -1,4 +1,4 @@
-package com.semistone.androidapp.utility;
+package com.semistone.donately.utility;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,8 +12,8 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 
-import com.semistone.androidapp.R;
-import com.semistone.androidapp.main.MainActivity;
+import com.semistone.donately.R;
+import com.semistone.donately.main.MainActivity;
 
 /**
  * Created by semistone on 2017-02-10.

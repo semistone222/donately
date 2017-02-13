@@ -1,10 +1,10 @@
-package com.semistone.androidapp.background;
+package com.semistone.donately.background;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.semistone.androidapp.utility.NotificationUtils;
+import com.semistone.donately.utility.NotificationUtils;
 
 public class NotificationReceiver extends BroadcastReceiver {
     public NotificationReceiver() {

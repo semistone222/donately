@@ -1,4 +1,4 @@
-package com.semistone.androidapp.history;
+package com.semistone.donately.history;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.semistone.androidapp.R;
-import com.semistone.androidapp.data.History;
+import com.semistone.donately.R;
+import com.semistone.donately.data.History;
 
 import java.text.SimpleDateFormat;
 

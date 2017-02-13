@@ -1,7 +1,6 @@
 package com.semistone.donately;
 
 import android.app.Application;
-
 import io.realm.Realm;
 
 /**
@@ -9,8 +8,6 @@ import io.realm.Realm;
  */
 
 public class MyApplication extends Application {
-
-    int a;
 
     @Override
     public void onCreate() {

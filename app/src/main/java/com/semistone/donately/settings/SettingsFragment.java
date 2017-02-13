@@ -1,5 +1,6 @@
 package com.semistone.donately.settings;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         LoginManager.getInstance().logOut();
                         break;
                     case User.GOOGLE:
-                        //Auth.GoogleSignInApi.signOut(MyApplication.)
+                        // TODO: 2017-02-13 구글 로그아웃
                         break;
                     default:
                         break;
@@ -66,8 +67,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     }
                 });
 
-                // TODO: 2017-02-13 액티비티 순서
                 startActivity(new Intent(getActivity(), LoginActivity.class));
+                getActivity().setResult(Activity.RESULT_OK);
+                getActivity().finish();
 
                 return true;
             }

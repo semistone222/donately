@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                         // TODO: 2017-02-13 액티비티 순서
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
                     }
                 });
 
@@ -166,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             // TODO: 2017-02-13 액티비티 순서
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
             // TEST
             Toast.makeText(getApplicationContext(), String.valueOf(mGoogleApiClient.isConnected()), Toast.LENGTH_SHORT).show();
         } else {

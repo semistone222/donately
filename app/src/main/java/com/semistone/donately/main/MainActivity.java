@@ -1,5 +1,6 @@
 package com.semistone.donately.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final static int REQUEST_EXIT = 1342;
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));
         } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), REQUEST_EXIT);
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_share) {
@@ -136,5 +139,15 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         mRealm.close();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_EXIT) {
+            if (resultCode == RESULT_OK) {
+                finish();
+            }
+        }
     }
 }

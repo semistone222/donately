@@ -26,7 +26,7 @@ public class IntroActivity extends OnboarderActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isNotFirst = sharedPref.getBoolean(getString(R.string.pref_intro_not_first_key), getResources().getBoolean(R.bool.pref_intro_not_first_default));
         if (isNotFirst) {
-            onFinishIntro();
+            FinishIntro();
         } else {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(getString(R.string.pref_intro_not_first_key), true);
@@ -66,10 +66,10 @@ public class IntroActivity extends OnboarderActivity {
 
     @Override
     public void onFinishButtonPressed() {
-        onFinishIntro();
+        FinishIntro();
     }
 
-    private void onFinishIntro() {
+    private void FinishIntro() {
         startActivity(new Intent(IntroActivity.this, LoginActivity.class));
         finish();
     }

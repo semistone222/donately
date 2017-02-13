@@ -51,18 +51,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: 2017-02-09 설정 창에서 로그아웃 하도록
-    @OnClick(R.id.facebook_logout)
-    void onClickFacebookLogout(View view) {
-        LoginManager.getInstance().logOut();
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                mRealm.where(User.class).findAll().deleteAllFromRealm();
-            }
-        });
-    }
-
     // TODO: 2017-02-09 구글 로그인 추가
     @OnClick(R.id.google_login)
     void onClickGoogleLogin(View view) {
@@ -89,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         String name = object.optString("name");
                         String email = object.optString("email");
                         String accessToken = loginResult.getAccessToken().getToken();
-                        String type = "facebook";
+                        String type = User.FACEBOOK;
 
                         mRealm.beginTransaction();
                         User user = mRealm.createObject(User.class, id);

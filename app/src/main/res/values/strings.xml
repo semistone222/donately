@@ -42,6 +42,8 @@
 
     <!--notification-->
     <string name="pref_notification_key" translatable="false">notification</string>
+    <string name="pref_notification_summary">We notify everyday for your daily donation. Turn this on, plz :)</string>
+    <string name="pref_notification_title">Enable everyday notifications</string>
     <string name="encourage_donation_notification_title">Time\'s up!</string>
     <string name="encourage_donation_notification_body">Are you ready to Donate.ly?</string>
 
@@ -49,4 +51,25 @@
     <string name="message_history">These are records you donated.</string>
     <string name="login_canceled">login canceled.</string>
     <string name="login_error">login error.</string>
+
+    <!--preference advertisement length-->
+    <string name="pref_advertisement_length_key" translatable="false">advertisement-length</string>
+    <string name="pref_advertisement_length_title">Advertisement length</string>
+    <string name="pref_advertisement_length_60">60</string>
+    <string name="pref_advertisement_length_30">30</string>
+    <string name="pref_advertisement_length_15">15</string>
+    <string-array name="pref_advertisement_length_list_titles">
+        <item>60 seconds</item>
+        <item>30 seconds</item>
+        <item>15 seconds</item>
+    </string-array>
+    <string-array name="pref_advertisement_length_list_values">
+        <item>@string/pref_advertisement_length_60</item>
+        <item>@string/pref_advertisement_length_30</item>
+        <item>@string/pref_advertisement_length_15</item>
+    </string-array>
+
+    <!--preference logout-->
+    <string name="pref_logout_title">Logout</string>
+    <string name="pref_logout_key" translatable="false">logout</string>
 </resources>

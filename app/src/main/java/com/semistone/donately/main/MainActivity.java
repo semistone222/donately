@@ -20,6 +20,7 @@ import com.semistone.donately.R;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.login.LoginActivity;
+import com.semistone.donately.settings.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,8 +103,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            // test
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
         }
 
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));
         } else if (id == R.id.nav_settings) {
-
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_share) {

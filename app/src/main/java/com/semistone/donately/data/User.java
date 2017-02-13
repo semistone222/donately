@@ -10,6 +10,8 @@ import io.realm.annotations.PrimaryKey;
 public class User extends RealmObject {
 
     public static final String ID = "id";
+    public static final String FACEBOOK = "facebook";
+    public static final String GOOGLE = "google";
 
     @PrimaryKey
     private String id;

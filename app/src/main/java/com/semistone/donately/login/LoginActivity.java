@@ -82,7 +82,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         user.setPhotoUrl(photoUrl);
                         mRealm.commitTransaction();
 
-                        // TODO: 2017-02-13 액티비티 순서
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     }
@@ -165,7 +164,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             user.setPhotoUrl(photoUrl);
             mRealm.commitTransaction();
 
-            // TODO: 2017-02-13 액티비티 순서
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
             // TEST

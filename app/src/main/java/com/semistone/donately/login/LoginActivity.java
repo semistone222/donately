@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         if (mRealm.where(User.class).findAll().size() != 0) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
 
         setUpFacebookLogin();
@@ -175,6 +176,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @OnClick(R.id.gotomainactivity)
     protected void onClickGoToMainActivity(View view) {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override

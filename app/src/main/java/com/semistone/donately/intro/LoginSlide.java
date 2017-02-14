@@ -1,9 +1,12 @@
-package com.semistone.donately.login;
+package com.semistone.donately.intro;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -32,29 +35,49 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+/**
+ * Created by semistone on 2017-02-14.
+ */
 
+public class LoginSlide extends Fragment implements GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks {
     private static final int RC_SIGN_IN = 9001;
-
+    private static final String ARG_LAYOUT_RES_ID = "layoutResId";
+    private int mLayoutResId;
     private CallbackManager mCallbackManager;
     private GoogleApiClient mGoogleApiClient;
     private Realm mRealm;
 
+    public static LoginSlide newInstance(int layoutResId) {
+        LoginSlide sampleSlide = new LoginSlide();
+
+        Bundle args = new Bundle();
+        args.putInt(ARG_LAYOUT_RES_ID, layoutResId);
+        sampleSlide.setArguments(args);
+
+        return sampleSlide;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
-        ButterKnife.bind(this);
-        mRealm = Realm.getDefaultInstance();
-
-        if (mRealm.where(User.class).findAll().size() != 0) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+        if (getArguments() != null && getArguments().containsKey(ARG_LAYOUT_RES_ID)) {
+            mLayoutResId = getArguments().getInt(ARG_LAYOUT_RES_ID);
         }
 
+        mRealm = Realm.getDefaultInstance();
         setUpFacebookLogin();
         setUpGoogleLogin();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(mLayoutResId, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     private void setUpFacebookLogin() {
@@ -83,8 +106,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         user.setPhotoUrl(photoUrl);
                         mRealm.commitTransaction();
 
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        getActivity().finish();
                     }
                 });
 
@@ -96,12 +119,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), R.string.login_canceled, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.login_canceled, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -111,10 +134,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .requestEmail()
                 .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
                 .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 
     @Override
@@ -134,7 +182,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -164,22 +212,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             user.setPhotoUrl(photoUrl);
             mRealm.commitTransaction();
 
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
         } else {
-            Toast.makeText(getApplicationContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
         }
     }
 
-    // TEST
-    @OnClick(R.id.gotomainactivity)
-    protected void onClickGoToMainActivity(View view) {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
-    }
-
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mRealm.close();
     }

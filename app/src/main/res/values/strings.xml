@@ -74,11 +74,7 @@
     <string name="pref_logout_title">Logout</string>
     <string name="pref_logout_key" translatable="false">logout</string>
 
-    <!--preference intro activity-->
-    <string name="pref_intro_not_first_key" translatable="false">intro-not-first</string>
-
     <!--content description-->
-    <string name="cd_app_logo">app logo</string>
     <string name="cd_user_image">user image</string>
     <string name="cd_divider">divider</string>
 </resources>

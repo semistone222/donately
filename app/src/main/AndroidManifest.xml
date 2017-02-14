@@ -19,16 +19,15 @@
 
         <activity
             android:name=".main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".intro.IntroActivity">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.LoginActivity"
-            android:theme="@style/AppTheme.NoTitle" />
+            android:name=".intro.IntroActivity"
+            android:theme="@style/AppTheme.NoTitle"></activity>
         <activity
             android:name=".history.HistoryActivity"
             android:label="@string/title_activity_history"

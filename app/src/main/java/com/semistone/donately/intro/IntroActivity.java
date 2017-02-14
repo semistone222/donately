@@ -1,7 +1,6 @@
 package com.semistone.donately.intro;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,23 +19,13 @@ public class IntroActivity extends AppIntro {
         addSlide(AppIntroFragment.newInstance(getString(R.string.onboaderpage1_title), getString(R.string.onboaderpage1_description), R.drawable.ic_loving, ContextCompat.getColor(this, R.color.colorAccent)));
         addSlide(AppIntroFragment.newInstance(getString(R.string.onboaderpage2_title), getString(R.string.onboaderpage2_description), R.drawable.ic_video_play, ContextCompat.getColor(this, R.color.colorAccent)));
         addSlide(AppIntroFragment.newInstance(getString(R.string.onboaderpage3_title), getString(R.string.onboaderpage3_description), R.drawable.ic_free, ContextCompat.getColor(this, R.color.colorAccent)));
-        addSlide(SampleSlide.newInstance(R.layout.intro_login));
-
-        showSkipButton(false);
+        addSlide(LoginSlide.newInstance(R.layout.intro_login));
+        setDoneText(null);
     }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-    }
-
-    @Override
-    public void onDonePressed(Fragment currentFragment) {
-        super.onDonePressed(currentFragment);
-    }
-
-    @Override
-    public void onSlideChanged(@Nullable Fragment oldFragment, @Nullable Fragment newFragment) {
-        super.onSlideChanged(oldFragment, newFragment);
+        pager.setCurrentItem(mPagerAdapter.getCount() - 1);
     }
 }

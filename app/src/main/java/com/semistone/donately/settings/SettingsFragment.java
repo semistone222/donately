@@ -16,6 +16,7 @@ import com.semistone.donately.MyApplication;
 import com.semistone.donately.R;
 import com.semistone.donately.background.NotificationReceiver;
 import com.semistone.donately.data.User;
+import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.login.LoginActivity;
 import com.semistone.donately.utility.AlarmUtils;
 
@@ -67,7 +68,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                     }
                 });
 
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getActivity(), IntroActivity.class));
                 getActivity().setResult(Activity.RESULT_OK);
                 getActivity().finish();
 

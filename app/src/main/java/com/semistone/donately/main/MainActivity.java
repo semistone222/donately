@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
+import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
 
 import butterknife.BindView;
@@ -55,6 +56,13 @@ public class MainActivity extends AppCompatActivity
 
         mRealm = Realm.getDefaultInstance();
         mUser = mRealm.where(User.class).findFirst();
+
+        if(mUser == null || mUser.equals(null)) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         setSupportActionBar(mToolbar);
 

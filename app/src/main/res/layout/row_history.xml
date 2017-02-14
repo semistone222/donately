@@ -44,6 +44,5 @@
             android:gravity="center"
             tools:text="17/02/22 11:11" />
 
-
     </RelativeLayout>
 </LinearLayout>

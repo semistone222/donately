@@ -11,6 +11,7 @@ import com.semistone.donately.R;
 import com.semistone.donately.data.History;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,9 +43,9 @@ public class HistoryAdapter extends RealmRecyclerViewAdapter<History, HistoryAda
         holder.tvCount.setText(String.valueOf(getItemCount() - position));
         holder.tvBeneficiary.setText(history.getBeneficiary());
         long donateDate = history.getDonateDate();
-        String donateDateStr = (new SimpleDateFormat(DATE_FORMAT)).format(donateDate);
+        String donateDateStr = (new SimpleDateFormat(DATE_FORMAT, Locale.US)).format(donateDate);
         holder.tvDonateDate.setText(donateDateStr);
-        holder.tvPoint.setText(String.valueOf(history.getPoint()) + "p");
+        holder.tvPoint.setText(String.valueOf(history.getPoint()));
         holder.itemView.setTag(history.getHistoryId());
     }
 

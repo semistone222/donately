@@ -130,7 +130,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @OnClick(R.id.facebook_login)
     void onClickFacebookLogin(View view) {
-        FacebookSdk.sdkInitialize(getApplicationContext());
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
     }
 

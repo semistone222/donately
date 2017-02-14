@@ -28,6 +28,7 @@
     <string name="nav_settings_title">Settings</string>
     <string name="nav_about_title">About</string>
     <string name="nav_share_title">Share</string>
+    <string name="nav_item_communicate">Communicate</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -75,4 +76,9 @@
 
     <!--preference intro activity-->
     <string name="pref_intro_not_first_key" translatable="false">intro-not-first</string>
+
+    <!--content description-->
+    <string name="cd_app_logo">app logo</string>
+    <string name="cd_user_image">user image</string>
+    <string name="cd_divider">divider</string>
 </resources>

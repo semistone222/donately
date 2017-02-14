@@ -16,12 +16,10 @@ import java.util.List;
 
 public class IntroActivity extends OnboarderActivity {
 
-    private List<OnboarderPage> onboarderPages;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        onboarderPages = new ArrayList<OnboarderPage>();
+        List<OnboarderPage> onboarderPages = new ArrayList<>();
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isNotFirst = sharedPref.getBoolean(getString(R.string.pref_intro_not_first_key), getResources().getBoolean(R.bool.pref_intro_not_first_default));
@@ -30,7 +28,7 @@ public class IntroActivity extends OnboarderActivity {
         } else {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(getString(R.string.pref_intro_not_first_key), true);
-            editor.commit();
+            editor.apply();
         }
 
         OnboarderPage onboarderPage1 = new OnboarderPage(R.string.onboaderpage1_title, R.string.onboaderpage1_description, R.drawable.ic_loving);

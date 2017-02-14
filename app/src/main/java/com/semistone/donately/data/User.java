@@ -1,7 +1,5 @@
 package com.semistone.donately.data;
 
-import android.net.Uri;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

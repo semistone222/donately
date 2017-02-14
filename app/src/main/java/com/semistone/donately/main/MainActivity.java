@@ -1,6 +1,5 @@
 package com.semistone.donately.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -44,8 +43,6 @@ public class MainActivity extends AppCompatActivity
 
     private Realm mRealm;
 
-    private User mUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +51,14 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         mRealm = Realm.getDefaultInstance();
-        mUser = mRealm.where(User.class).findFirst();
+
+        User mUser = mRealm.where(User.class).findFirst();
 
         setSupportActionBar(mToolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.setDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);

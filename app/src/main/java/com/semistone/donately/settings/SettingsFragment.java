@@ -11,8 +11,6 @@ import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.SwitchPreferenceCompat;
 
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
-import com.semistone.donately.MyApplication;
 import com.semistone.donately.R;
 import com.semistone.donately.background.NotificationReceiver;
 import com.semistone.donately.data.User;

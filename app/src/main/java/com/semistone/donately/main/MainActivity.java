@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity
 
         mRealm = Realm.getDefaultInstance();
 
-        User mUser = mRealm.where(User.class).findFirst();
+        User user = mRealm.where(User.class).findFirst();
 
-        if(mUser == null || mUser.equals(null)) {
+        if(user == null || user.equals(null)) {
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
             finish();
@@ -73,11 +73,11 @@ public class MainActivity extends AppCompatActivity
 
         View mNavHeader = mNavigationView.inflateHeaderView(R.layout.nav_header_main);
 
-        ((TextView) mNavHeader.findViewById(R.id.tv_user_name)).setText(mUser.getName());
-        ((TextView) mNavHeader.findViewById(R.id.tv_user_email)).setText(mUser.getEmail());
+        ((TextView) mNavHeader.findViewById(R.id.tv_user_name)).setText(user.getName());
+        ((TextView) mNavHeader.findViewById(R.id.tv_user_email)).setText(user.getEmail());
 
         Glide.with(this)
-                .load(mUser.getPhotoUrl())
+                .load(user.getPhotoUrl())
                 .bitmapTransform(new CropCircleTransformation(this))
                 .placeholder(R.drawable.ic_face_black_24dp)
                 .error(R.drawable.ic_report_black_24dp)

@@ -95,7 +95,11 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
                         String email = object.optString("email");
                         String accessToken = loginResult.getAccessToken().getToken();
                         String type = "facebook";
-                        String photoUrl = "https://graph.facebook.com/" + id + "/picture?type=large";
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append("https://graph.facebook.com/");
+                        stringBuilder.append(id);
+                        stringBuilder.append("/picture?type=large");
+                        String photoUrl = stringBuilder.toString();
 
                         mRealm.beginTransaction();
                         User user = mRealm.createObject(User.class, id);
@@ -198,7 +202,7 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
 
             String id = acct.getId();
             String name = acct.getDisplayName();
-            String email =  acct.getEmail();
+            String email = acct.getEmail();
             String accessToken = acct.getIdToken();
             String type = User.GOOGLE;
             String photoUrl = acct.getPhotoUrl().toString();

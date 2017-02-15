@@ -2,7 +2,10 @@ package com.semistone.donately.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +42,15 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawer;
 
+    @BindView(R.id.collapsing_toolbar_layout)
+    protected CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @BindView(R.id.tl_main)
+    protected TabLayout mTlMain;
+
+    @BindView(R.id.view_pager)
+    protected ViewPager mViewPager;
+
     @BindView(R.id.nav_view)
     protected NavigationView mNavigationView;
 
@@ -48,11 +60,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
 
         mRealm = Realm.getDefaultInstance();
-
         User user = mRealm.where(User.class).findFirst();
 
         if(user == null || user.equals(null)) {
@@ -62,20 +72,23 @@ public class MainActivity extends AppCompatActivity
             return;
         }
 
+        // 툴바
         setSupportActionBar(mToolbar);
 
+        // 접히는 툴바 레이아웃
+        mCollapsingToolbarLayout.setTitle("gsdfsdfgsfd");
+
+        // 토글
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // 네비게이션
         mNavigationView.setNavigationItemSelectedListener(this);
-
         View mNavHeader = mNavigationView.inflateHeaderView(R.layout.nav_header_main);
-
         ((TextView) mNavHeader.findViewById(R.id.tv_user_name)).setText(user.getName());
         ((TextView) mNavHeader.findViewById(R.id.tv_user_email)).setText(user.getEmail());
-
         Glide.with(this)
                 .load(user.getPhotoUrl())
                 .bitmapTransform(new CropCircleTransformation(this))
@@ -84,6 +97,16 @@ public class MainActivity extends AppCompatActivity
                 .thumbnail(0.1f)
                 .override(150, 150)
                 .into((ImageView) mNavHeader.findViewById(R.id.iv_user_image));
+
+        // 탭 레이아웃
+        // mTlMain;
+
+
+        MainAdapter mainAdpater = new MainAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mainAdpater);
+        mTlMain.setupWithViewPager(mViewPager);
+
+
     }
 
     @OnClick(R.id.fab)

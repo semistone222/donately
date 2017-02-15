@@ -8,13 +8,15 @@
 
     <TextView
         android:id="@+id/facebook_login"
-        style="@style/FacebookLoginButton"
-        android:text="@string/facebook_login" />
+        style="@style/LoginButton"
+        android:text="@string/facebook_login"
+        android:background="@color/facebook"/>
 
     <TextView
         android:id="@+id/google_login"
-        style="@style/GoogleLoginButton"
-        android:text="@string/google_login" />
+        style="@style/LoginButton"
+        android:text="@string/google_login"
+        android:background="@color/google" />
 
     <TextView
         android:layout_width="wrap_content"

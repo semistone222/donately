@@ -7,17 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.semistone.donately.main.MainActivity">
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </android.support.v4.widget.NestedScrollView>
-
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,12 +22,12 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <!--todo : 이미지 넣고 height 조절 -->
+            <!--todo :배경색이 primary인 이미지 넣고 height 조절 -->
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="180dp"
                 android:background="@color/colorPrimaryLight"
-                android:minHeight="150dp"
+                android:minHeight="180dp"
                 app:layout_collapseMode="parallax"
                 app:srcCompat="@drawable/ic_loving_24dp" />
 
@@ -51,14 +40,26 @@
         </android.support.design.widget.CollapsingToolbarLayout>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tl_main"
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
             app:tabGravity="fill" />
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.NestedScrollView>
+
     <!--todo : 이거 옮기기-->
-    <include layout="@layout/content_main" />
+    <!--<include layout="@layout/content_main" />-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -66,6 +67,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_favorite_white_24dp" />
 
 </android.support.design.widget.CoordinatorLayout>

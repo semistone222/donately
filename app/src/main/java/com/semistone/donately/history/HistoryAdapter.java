@@ -30,6 +30,8 @@ public class HistoryAdapter extends RealmRecyclerViewAdapter<History, HistoryAda
         super(context, data, true);
     }
 
+    // TODO: 2017-02-16 없을때 없다고 표시
+
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_history, parent, false);

@@ -2,6 +2,7 @@ package com.semistone.donately.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -24,7 +25,9 @@ import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
+import com.semistone.donately.video.VideoActivity;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity
 
     private final static int REQUEST_EXIT = 1342;
 
+    @BindString(R.string.app_name)
+    protected String mAppName;
+
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
 
@@ -45,8 +51,8 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.collapsing_toolbar_layout)
     protected CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    @BindView(R.id.tl_main)
-    protected TabLayout mTlMain;
+    @BindView(R.id.tab_layout)
+    protected TabLayout mTabLayout;
 
     @BindView(R.id.view_pager)
     protected ViewPager mViewPager;
@@ -72,19 +78,15 @@ public class MainActivity extends AppCompatActivity
             return;
         }
 
-        // 툴바
         setSupportActionBar(mToolbar);
 
-        // 접히는 툴바 레이아웃
-        mCollapsingToolbarLayout.setTitle("gsdfsdfgsfd");
+        mCollapsingToolbarLayout.setTitle(mAppName);
 
-        // 토글
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // 네비게이션
         mNavigationView.setNavigationItemSelectedListener(this);
         View mNavHeader = mNavigationView.inflateHeaderView(R.layout.nav_header_main);
         ((TextView) mNavHeader.findViewById(R.id.tv_user_name)).setText(user.getName());
@@ -98,20 +100,31 @@ public class MainActivity extends AppCompatActivity
                 .override(150, 150)
                 .into((ImageView) mNavHeader.findViewById(R.id.iv_user_image));
 
-        // 탭 레이아웃
-        // mTlMain;
+        MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mainAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        MainAdapter mainAdpater = new MainAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mainAdpater);
-        mTlMain.setupWithViewPager(mViewPager);
+            }
 
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
     @OnClick(R.id.fab)
     void onClickFab(View view) {
-        Snackbar.make(view, "TEST", Snackbar.LENGTH_SHORT).show();
+        startActivity(new Intent(MainActivity.this, VideoActivity.class));
     }
 
     @Override

@@ -3,16 +3,15 @@ package com.semistone.donately.intro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -123,12 +122,12 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
 
             @Override
             public void onCancel() {
-                Toast.makeText(getActivity(), R.string.login_canceled, Toast.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().getWindow().getDecorView().getRootView(), R.string.login_canceled, Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
+                Snackbar.make(getActivity().getWindow().getDecorView().getRootView(), R.string.login_error, Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -219,7 +218,7 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
             startActivity(new Intent(getActivity(), MainActivity.class));
             getActivity().finish();
         } else {
-            Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
+            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(), R.string.login_error, Snackbar.LENGTH_SHORT).show();
         }
     }
 

@@ -10,10 +10,22 @@
     <string name="onboaderpage3_title">Free</string>
     <string name="onboaderpage3_description">Don\'t worry, everything is free.</string>
 
-    <!--beneficiaries description-->
-    <string name="save_animal_title">SAVE ANIMAL</string>
-    <string name="save_animal_description">There is a lot of abandoned or mistreated animals. They need your help.</string>
-    <string name="tap_to_donate">TAP TO DONATE</string>
+    <!--main fragment-->
+    <string name="fragment_poverty_title">GIVE FOOD TO HUNGER</string>
+    <string name="fragment_poverty_description">Every day too many men and women across the globe struggle to feed their children a nutritious meal. Although we produce enough food to feed everyone, a lots of people dies from malnutrition.</string>
+    <string name="fragment_poverty_beneficiary">World Food Programme</string>
+
+    <string name="fragment_refugee_title">HELP REFUGEE</string>
+    <string name="fragment_refugee_description">You can provide critical emergency assistance in the form of clean water, sanitation and health care, as well as shelter, blankets, household goods and sometimes food.</string>
+    <string name="fragment_refugee_beneficiary">UN Refugee Agency</string>
+
+    <string name="fragment_animal_title">SAVE ANIMAL</string>
+    <string name="fragment_animal_description">There is a lot of abandoned or mistreated animals. They need your help.</string>
+    <string name="fragment_animal_beneficiary">World Animal Protection International</string>
+
+    <string name="fragment_environment_title">PROTECT ENVIRONMENT</string>
+    <string name="fragment_environment_description">Defending our oceans, protecting the world\'s ancient forests, creating a toxic free future and campaigning for sustainable agriculture.</string>
+    <string name="fragment_environment_beneficiary">Green Peace</string>
 
     <!--user info-->
     <string name="default_user_email">android.studio@android.com</string>
@@ -79,6 +91,8 @@
     <!--content description-->
     <string name="cd_user_image">user image</string>
     <string name="cd_divider">divider</string>
+    <string name="cd_app_image">app image</string>
+    <string name="cd_beneficiary_image">beneficiary image</string>
 
     <!--video-->
     <string name="video_current_playing_time_key" translatable="false">video-current-playing-time</string>

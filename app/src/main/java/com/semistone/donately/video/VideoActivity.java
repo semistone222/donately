@@ -1,10 +1,11 @@
 package com.semistone.donately.video;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,14 +23,14 @@ import butterknife.ButterKnife;
 
 public class VideoActivity extends AppCompatActivity {
 
-    String TAG = getPackageName();
+    private final String TAG = getPackageName();
     final private int PROGRESS_BAR_MAX = 100;
 
     @BindView(R.id.video_view)
-    VideoView mVideoView;
+    protected VideoView mVideoView;
 
     @BindView(R.id.video_progress_bar)
-    ProgressBar mVideoProgressBar;
+    protected ProgressBar mVideoProgressBar;
 
     private int mPausePosition;
 
@@ -53,6 +54,10 @@ public class VideoActivity extends AppCompatActivity {
         } else {
             mPausePosition = 0;
         }
+
+        // 영상 선택 가능하게
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String adsLength  = sharedPreferences.getString(getString(R.string.pref_advertisement_length_key), getResources().getString(R.string.pref_advertisement_length_15));
 
         // TODO: 2017-02-16 나중에 서버에서 저용량 광고영상을 내부 저장소로 가져오도록 바꾸자.
         // TODO: 2017-02-16 앱 시작하면 서비스를 이용해서 서버에서 가져오는게 맞을듯...

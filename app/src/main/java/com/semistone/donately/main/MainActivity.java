@@ -2,7 +2,6 @@ package com.semistone.donately.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         mRealm = Realm.getDefaultInstance();
         User user = mRealm.where(User.class).findFirst();
 
-        if(user == null || user.equals(null)) {
+        if (user == null || user.equals(null)) {
             Intent intent = new Intent(this, IntroActivity.class);
             startActivity(intent);
             finish();
@@ -83,7 +82,8 @@ public class MainActivity extends AppCompatActivity
         mCollapsingToolbarLayout.setTitle(mAppName);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, mDrawer, mToolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -124,7 +124,9 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.fab)
     void onClickFab(View view) {
-        startActivity(new Intent(MainActivity.this, VideoActivity.class));
+//        startActivity(new Intent(MainActivity.this, VideoActivity.class));
+        Snackbar.make(view, String.valueOf(mTabLayout.getSelectedTabPosition()),
+                Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -166,7 +168,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));
         } else if (id == R.id.nav_settings) {
-            startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), REQUEST_EXIT);
+            startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class),
+                    REQUEST_EXIT);
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_share) {

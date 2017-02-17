@@ -6,6 +6,7 @@
     <color name="colorAccent">#292929</color>
     <color name="colorVideoBackground">#1e1e1e</color>
     <color name="colorProgressBackground">#3b3b3b</color>
+    <color name="colorBackground">#292929</color>
     <color name="colorDivider">#ededed</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#BDBDBD</color>

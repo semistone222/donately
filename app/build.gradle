@@ -1,15 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.semistone.donately"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -17,12 +19,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.github.chyrta:AndroidOnboarder:0.6'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:cardview-v7:25.1.0'
     compile 'com.jakewharton:butterknife:8.5.1'
@@ -32,4 +35,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'io.realm:android-adapters:1.4.0'
+    compile 'com.android.support:preference-v7:25.1.0'
+    compile 'com.google.android.gms:play-services-auth:8.3.0'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
 }

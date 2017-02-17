@@ -1,49 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="50dp">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="@dimen/text_padding"
+        android:gravity="center"
+        tools:text="1" />
 
-        <TextView
-            android:id="@+id/tv_count"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="@dimen/text_padding"
-            android:gravity="center"
-            tools:text="1"/>
+    <TextView
+        android:id="@+id/tv_beneficiary"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding"
+        android:layout_toEndOf="@+id/tv_count"
+        android:layout_toRightOf="@id/tv_count"
+        android:gravity="center"
+        tools:text="Green Peace" />
 
-        <TextView
-            android:id="@+id/tv_beneficiary"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/tv_count"
-            android:layout_margin="@dimen/text_padding"
-            android:gravity="center"
-            tools:text="Green Peace" />
+    <TextView
+        android:id="@+id/tv_point"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_padding"
+        android:layout_toLeftOf="@+id/tv_donate_date"
+        android:layout_toStartOf="@+id/tv_donate_date"
+        android:gravity="center"
+        tools:text="23" />
 
-        <TextView
-            android:id="@+id/tv_point"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/text_padding"
-            android:layout_toLeftOf="@+id/tv_donate_date"
-            android:gravity="center"
-            tools:text="23p" />
+    <TextView
+        android:id="@+id/tv_donate_date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/text_padding"
+        android:gravity="center"
+        tools:text="17/02/22 11:11" />
 
-        <TextView
-            android:id="@+id/tv_donate_date"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/text_padding"
-            android:gravity="center"
-            tools:text="17/02/22 11:11" />
-
-
-    </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

@@ -19,7 +19,8 @@ import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
-import com.semistone.donately.login.LoginActivity;
+import com.semistone.donately.intro.IntroActivity;
+import com.semistone.donately.settings.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +30,8 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final static int REQUEST_EXIT = 1342;
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -41,8 +44,6 @@ public class MainActivity extends AppCompatActivity
 
     private Realm mRealm;
 
-    private User mUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,23 +52,32 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         mRealm = Realm.getDefaultInstance();
-        mUser = mRealm.where(User.class).findFirst();
+
+        User user = mRealm.where(User.class).findFirst();
+
+        if(user == null || user.equals(null)) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         setSupportActionBar(mToolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.setDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
         View mNavHeader = mNavigationView.inflateHeaderView(R.layout.nav_header_main);
 
-        ((TextView) mNavHeader.findViewById(R.id.tv_user_name)).setText(mUser.getName());
-        ((TextView) mNavHeader.findViewById(R.id.tv_user_email)).setText(mUser.getEmail());
+        ((TextView) mNavHeader.findViewById(R.id.tv_user_name)).setText(user.getName());
+        ((TextView) mNavHeader.findViewById(R.id.tv_user_email)).setText(user.getEmail());
+
         Glide.with(this)
-                .load("https://graph.facebook.com/" + mUser.getId() + "/picture?type=large")
+                .load(user.getPhotoUrl())
                 .bitmapTransform(new CropCircleTransformation(this))
                 .placeholder(R.drawable.ic_face_black_24dp)
                 .error(R.drawable.ic_report_black_24dp)
@@ -102,8 +112,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            // test
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             return true;
         }
 
@@ -121,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));
         } else if (id == R.id.nav_settings) {
-
+            startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class), REQUEST_EXIT);
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_share) {
@@ -136,5 +145,15 @@ public class MainActivity extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         mRealm.close();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_EXIT) {
+            if (resultCode == RESULT_OK) {
+                finish();
+            }
+        }
     }
 }

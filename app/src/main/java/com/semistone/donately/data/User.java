@@ -10,6 +10,8 @@ import io.realm.annotations.PrimaryKey;
 public class User extends RealmObject {
 
     public static final String ID = "id";
+    public static final String FACEBOOK = "facebook";
+    public static final String GOOGLE = "google";
 
     @PrimaryKey
     private String id;
@@ -22,6 +24,8 @@ public class User extends RealmObject {
 
     private String type;
 
+    private String photoUrl;
+
     @Override
     public String toString() {
         return "User{" +
@@ -30,6 +34,7 @@ public class User extends RealmObject {
                 ", email='" + email + '\'' +
                 ", accessToken='" + accessToken + '\'' +
                 ", type='" + type + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
                 '}';
     }
 
@@ -71,5 +76,13 @@ public class User extends RealmObject {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

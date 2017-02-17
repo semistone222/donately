@@ -6,55 +6,58 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.semistone.donately.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="false">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.semistone.donately.main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name="com.semistone.donately.intro.IntroActivity">
+            android:name=".main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.semistone.donately.login.LoginActivity"
-            android:theme="@style/AppTheme.NoTitle" />
-
+            android:name=".intro.IntroActivity"
+            android:theme="@style/AppTheme.NoTitle"></activity>
         <activity
-            android:name="com.semistone.donately.history.HistoryActivity"
+            android:name=".history.HistoryActivity"
             android:label="@string/title_activity_history"
-            android:parentActivityName="com.semistone.donately.main.MainActivity"
+            android:parentActivityName=".main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.semistone.donately.main.MainActivity" />
         </activity>
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.main.MainActivity" />
+        </activity>
 
-        <service android:name="com.semistone.donately.background.BootService" />
+        <service android:name=".background.BootService" />
 
         <receiver
-            android:name="com.semistone.donately.background.BootReceiver"
+            android:name=".background.BootReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
-            android:name="com.semistone.donately.background.NotificationReceiver"
+            android:name=".background.NotificationReceiver"
             android:process=":remote" />
     </application>
 </manifest>

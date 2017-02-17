@@ -15,7 +15,6 @@ public class AlarmUtils {
     public final static long ONE_DAY = 1000 * 60 * 60 * 24;
     public final static int NOTIFY_EVERY_DAY_ID = 222;
 
-    // TODO: 2017-02-10 설정 창에서 알람 키면 bash에서 키도록
     public static void registerBroadcastReceiverRepeating(Context context, Class<? extends BroadcastReceiver> target, int requestCode, long triggerAtMiils, long intervalMills) {
         Intent intent = new Intent(context, target);
         PendingIntent pIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -23,7 +22,6 @@ public class AlarmUtils {
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMiils, intervalMills, pIntent);
     }
 
-    // TODO: 2017-02-10 설정 창에서 알람 끄면 bash에서 끄도록
     public static void unRegisterBroadcastReceiver(Context context, Class<? extends BroadcastReceiver> target, int requestCode) {
         Intent intent = new Intent(context, target);
         PendingIntent pIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);

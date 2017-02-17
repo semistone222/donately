@@ -1,7 +1,6 @@
 package com.semistone.donately;
 
 import android.app.Application;
-
 import io.realm.Realm;
 
 /**

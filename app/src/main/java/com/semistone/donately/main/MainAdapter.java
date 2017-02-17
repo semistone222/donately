@@ -11,10 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import com.semistone.donately.Cheeses;
-import com.semistone.donately.R;
 
 /**
  * Created by semistone on 2017-02-15.
@@ -37,11 +33,13 @@ public class MainAdapter extends FragmentStatePagerAdapter {
         return NUM_ITEMS;
     }
 
-    // TODO: 2017-02-15 왜 안불러와 지지 ㅠ 페이지가 안보여
     @Override
     public Fragment getItem(int position) {
         Log.i(TAG, "getItem: ");
-        return ArrayListFragment.newInstance(position);
+//        if(position == 0) {
+            return new BeneficiaryFragment();
+//        }
+//        return ArrayListFragment.newInstance(position);
     }
 
     @Override
@@ -87,18 +85,18 @@ public class MainAdapter extends FragmentStatePagerAdapter {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View v = inflater.inflate(R.layout.fragment_pager_list, container, false);
-            View tv = v.findViewById(R.id.text);
-            ((TextView) tv).setText("Fragment #" + mNum);
-            Log.i("FragmentList abcdef", "Item clicked: ");
-            return v;
+            // View v = inflater.inflate(R.layout.fragment_pager_list, container, false);
+            // View tv = v.findViewById(R.id.text);
+            //((TextView) tv).setText("Fragment #" + mNum);
+            //Log.i("FragmentList abcdef", "Item clicked: ");
+            return null;
         }
 
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            setListAdapter(new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_1, Cheeses.sCheeseStrings));
+//            setListAdapter(new ArrayAdapter<String>(getActivity(),
+//                    android.R.layout.simple_list_item_1, Cheeses.sCheeseStrings));
         }
 
         @Override

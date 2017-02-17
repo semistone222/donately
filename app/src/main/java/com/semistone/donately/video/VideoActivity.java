@@ -84,7 +84,7 @@ public class VideoActivity extends AppCompatActivity {
             }
         });
 
-        // 비디오 뷰를 누르면
+        // 비디오 뷰를 누르면 광고로 넘어가게
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -150,5 +150,23 @@ public class VideoActivity extends AppCompatActivity {
         int currentPlayingTime = mVideoView.getCurrentPosition();
         mVideoView.pause();
         outState.putInt(getString(R.string.video_current_playing_time_key), currentPlayingTime);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy: ");
     }
 }

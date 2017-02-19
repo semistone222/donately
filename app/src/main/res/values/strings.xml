@@ -68,6 +68,7 @@
     <string name="advertisement_start">Ads start showing</string>
     <string name="video_explanation">Donations are made to this advertisement.</string>
     <string name="card_view_encourage">Tap heart to donate :)</string>
+    <string name="history_empty">No history yet, Try to donate!</string>
 
     <!--preference advertisement length-->
     <string name="pref_advertisement_length_key" translatable="false">advertisement-length</string>

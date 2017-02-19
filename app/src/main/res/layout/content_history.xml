@@ -13,11 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_history"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:nestedScrollingEnabled="false" />
     </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tv_history_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/history_empty"
+        android:visibility="gone"
+        tools:text="No history yet, Try to donate!" />
 
 </RelativeLayout>

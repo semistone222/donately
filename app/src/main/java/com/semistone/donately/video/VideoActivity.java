@@ -42,7 +42,6 @@ public class VideoActivity extends AppCompatActivity {
     private int mPausePosition;
     private Realm mRealm;
     private History mHistory;
-    private boolean isClicked = false;
 
     private Runnable syncVideoProgress = new Runnable() {
         @Override
@@ -120,11 +119,10 @@ public class VideoActivity extends AppCompatActivity {
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                // TODO: 2017-02-19
-                if(!isClicked) {
+                if(!mHistory.isClicked()) {
                     openWebPage("http://www.naver.com");
                     doTasksAfterAdsEnded();
-                    isClicked = true;
+                    mHistory.setClicked(true);
                 }
                 return true;
             }
@@ -174,9 +172,9 @@ public class VideoActivity extends AppCompatActivity {
                 History history = mRealm.createObject(History.class, History.getNextKey(mRealm));
                 history.setUserId(user.getId());
                 history.setDonateDate(System.currentTimeMillis());
-//                history.setBeneficiary();
+                history.setBeneficiary(mHistory.getBeneficiary());
                 history.setAdLength(mHistory.getAdLength());
-                history.setClicked(isClicked);
+                history.setClicked(mHistory.isClicked());
             }
         });
         setResult(RESULT_OK);

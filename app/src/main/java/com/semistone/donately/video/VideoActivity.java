@@ -60,20 +60,21 @@ public class VideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
         ButterKnife.bind(this);
-        mRealm.getDefaultInstance();
+        mRealm = Realm.getDefaultInstance();
         setFinishOnTouchOutside(false);
         mHistory = new History();
 
         Intent prev = getIntent();
         if (prev.hasExtra(getString(R.string.beneficiary_key))) {
-            mHistory.setBeneficiary(prev.getIntExtra(R.string.beneficiary_key, 0));
+//            mHistory.setBeneficiary(prev.getIntExtra(R.string.beneficiary_key, 0));
         }
 
         Snackbar.make(getWindow().getDecorView().getRootView(), R.string.advertisement_start,
                 Snackbar.LENGTH_SHORT).show();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mHistory.setAdLength(sharedPreferences.getInt(mAdLengthKey, AD_LENGTH_15));
+        String adLength = sharedPreferences.getString(mAdLengthKey, getString(R.string.pref_advertisement_length_15));
+        mHistory.setAdLength(Integer.valueOf(adLength));
 
         int advertisementRscId = -1;
         switch (mHistory.getAdLength()) {
@@ -162,16 +163,14 @@ public class VideoActivity extends AppCompatActivity {
     }
 
     private void doTasksAfterAdsEnded(final boolean isClicked) {
-        // TODO: 2017-02-16 db에 기록
         final User user = mRealm.where(User.class).findFirst();
-
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 History history = mRealm.createObject(History.class, History.getNextKey(mRealm));
                 history.setUserId(user.getId());
                 history.setDonateDate(System.currentTimeMillis());
-                history.setBeneficiary();
+//                history.setBeneficiary();
                 history.setAdLength(mHistory.getAdLength());
                 history.setClicked(isClicked);
             }

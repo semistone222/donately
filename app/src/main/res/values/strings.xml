@@ -72,15 +72,18 @@
     <!--preference advertisement length-->
     <string name="pref_advertisement_length_key" translatable="false">advertisement-length</string>
     <string name="pref_advertisement_length_title">Advertisement length</string>
+    <string name="pref_advertisement_length_15">15</string>
+    <string name="pref_advertisement_length_30">30</string>
+    <string name="pref_advertisement_length_60">60</string>
     <string-array name="pref_advertisement_length_list_titles">
         <item>15 seconds</item>
         <item>30 seconds</item>
         <item>60 seconds</item>
     </string-array>
     <string-array name="pref_advertisement_length_list_values">
-        <item>@integer/pref_advertisement_length_15</item>
-        <item>@integer/pref_advertisement_length_30</item>
-        <item>@integer/pref_advertisement_length_60</item>
+        <item>@string/pref_advertisement_length_15</item>
+        <item>@string/pref_advertisement_length_30</item>
+        <item>@string/pref_advertisement_length_60</item>
     </string-array>
 
     <!--preference logout-->

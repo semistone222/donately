@@ -18,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:background="?attr/colorPrimary"
         app:layout_anchor="@+id/app_bar"
         app:layout_anchorGravity="bottom"
         app:tabGravity="center"

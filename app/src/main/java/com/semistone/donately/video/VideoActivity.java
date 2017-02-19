@@ -42,6 +42,7 @@ public class VideoActivity extends AppCompatActivity {
     private int mPausePosition;
     private Realm mRealm;
     private History mHistory;
+    private boolean isClicked = false;
 
     private Runnable syncVideoProgress = new Runnable() {
         @Override
@@ -112,7 +113,7 @@ public class VideoActivity extends AppCompatActivity {
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                doTasksAfterAdsEnded(false);
+                doTasksAfterAdsEnded();
             }
         });
 
@@ -120,8 +121,11 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 // TODO: 2017-02-19
-                openWebPage("http://www.naver.com");
-                doTasksAfterAdsEnded(true);
+                if(!isClicked) {
+                    openWebPage("http://www.naver.com");
+                    doTasksAfterAdsEnded();
+                    isClicked = true;
+                }
                 return true;
             }
         });
@@ -162,7 +166,7 @@ public class VideoActivity extends AppCompatActivity {
         }
     }
 
-    private void doTasksAfterAdsEnded(final boolean isClicked) {
+    private void doTasksAfterAdsEnded() {
         final User user = mRealm.where(User.class).findFirst();
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override

@@ -20,18 +20,23 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
+import com.semistone.donately.data.History;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
 import com.semistone.donately.video.VideoActivity;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import io.realm.RealmResults;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import xyz.hanks.library.SmallBang;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,6 +65,10 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.nav_view)
     protected NavigationView mNavigationView;
 
+    @BindView(R.id.tv_donate_point)
+    protected TextView mTvDonatePoint;
+
+    private SmallBang mSmallBang;
     private Realm mRealm;
 
     @Override
@@ -67,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mSmallBang = SmallBang.attach2Window(this);
 
         mRealm = Realm.getDefaultInstance();
         User user = mRealm.where(User.class).findFirst();
@@ -77,6 +87,8 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
+
+        updatePointView(false);
 
         setSupportActionBar(mToolbar);
 
@@ -197,11 +209,25 @@ public class MainActivity extends AppCompatActivity
                 break;
             case REQUEST_ADS:
                 if (resultCode == RESULT_OK) {
-                    // TODO: 2017-02-17   포인트를 추가, 업데이트 하는 무엇인가...
+                    updatePointView(true);
                 }
                 break;
             default:
                 break;
+        }
+    }
+
+    // TODO: 2017-02-20 이쁘게 배치... 툴바 없앨까 고려도 해보자 
+    private void updatePointView(boolean isFromWatchingAd) {
+        int count = 0;
+        RealmResults<History> results = mRealm.where(History.class).findAll();
+        for (History history : results) {
+            count += history.getAdLength();
+        }
+        mTvDonatePoint.setText(String.valueOf(count));
+
+        if (isFromWatchingAd) {
+            mSmallBang.bang(mTvDonatePoint);
         }
     }
 }

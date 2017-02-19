@@ -66,6 +66,7 @@ public class VideoActivity extends AppCompatActivity {
 
         Intent prev = getIntent();
         if (prev.hasExtra(getString(R.string.beneficiary_key))) {
+            // TODO: 2017-02-20  
 //            mHistory.setBeneficiary(prev.getIntExtra(R.string.beneficiary_key, 0));
         }
 
@@ -119,7 +120,7 @@ public class VideoActivity extends AppCompatActivity {
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(!mHistory.isClicked()) {
+                if (!mHistory.isClicked()) {
                     openWebPage("http://www.naver.com");
                     doTasksAfterAdsEnded();
                     mHistory.setClicked(true);

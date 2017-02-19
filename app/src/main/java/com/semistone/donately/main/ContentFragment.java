@@ -72,6 +72,6 @@ public class ContentFragment extends Fragment {
 
     @OnClick(R.id.card_view)
     protected void onClickCardView(View v) {
-        Snackbar.make(v, String.valueOf(mNum), Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(v, R.string.card_view_encourage, Snackbar.LENGTH_SHORT).show();
     }
 }

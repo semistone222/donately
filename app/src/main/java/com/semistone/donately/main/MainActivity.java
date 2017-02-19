@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final static int REQUEST_EXIT = 1342;
+    private final static int REQUEST_ADS = 1523;
 
     @BindString(R.string.app_name)
     protected String mAppName;
@@ -119,14 +120,13 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
     }
 
     @OnClick(R.id.fab)
     void onClickFab(View view) {
-//        startActivity(new Intent(MainActivity.this, VideoActivity.class));
-        Snackbar.make(view, String.valueOf(mTabLayout.getSelectedTabPosition()),
-                Snackbar.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+        intent.putExtra(getString(R.string.beneficiary_key), mTabLayout.getSelectedTabPosition());
+        startActivityForResult(intent, REQUEST_ADS);
     }
 
     @Override
@@ -189,10 +189,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_EXIT) {
-            if (resultCode == RESULT_OK) {
-                finish();
-            }
+        switch (requestCode) {
+            case REQUEST_EXIT:
+                if (resultCode == RESULT_OK) {
+                    finish();
+                }
+                break;
+            case REQUEST_ADS:
+                if (resultCode == RESULT_OK) {
+                    // TODO: 2017-02-17   포인트를 추가, 업데이트 하는 무엇인가...
+                }
+                break;
+            default:
+                break;
         }
     }
 }

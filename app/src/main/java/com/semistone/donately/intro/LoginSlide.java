@@ -204,7 +204,12 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
             String email = acct.getEmail();
             String accessToken = acct.getIdToken();
             String type = User.GOOGLE;
-            String photoUrl = acct.getPhotoUrl().toString();
+            String photoUrl;
+            if (acct.getPhotoUrl() != null) {
+                photoUrl = acct.getPhotoUrl().toString();
+            } else {
+                photoUrl = null;
+            }
 
             mRealm.beginTransaction();
             User user = mRealm.createObject(User.class, id);

@@ -4,13 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.SwitchPreferenceCompat;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.semistone.donately.R;
 import com.semistone.donately.background.NotificationReceiver;
 import com.semistone.donately.data.User;
@@ -22,6 +29,7 @@ import io.realm.Realm;
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private GoogleApiClient mGoogleApiClient;
     private Realm mRealm;
 
     @Override
@@ -52,7 +60,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         LoginManager.getInstance().logOut();
                         break;
                     case User.GOOGLE:
-                        // TODO: 2017-02-13 구글 로그아웃
+                        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+                                Toast.makeText(getActivity(), R.string.logout_success, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         break;
                     default:
                         break;
@@ -61,7 +74,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        mRealm.where(User.class).findAll().deleteAllFromRealm();
+                        mRealm.deleteAll();
                     }
                 });
 
@@ -121,6 +134,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         super.onCreate(savedInstanceState);
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mGoogleApiClient.connect();
     }
 
     @Override

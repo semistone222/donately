@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,19 +11,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import com.semistone.donately.R;
+import com.semistone.donately.data.History;
+import com.semistone.donately.data.User;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 public class VideoActivity extends AppCompatActivity {
 
-    private final String TAG = getPackageName();
-    final private int PROGRESS_BAR_MAX = 100;
+    private static final long SYNC_INTERVAL = 1000;
+    private static final int AD_LENGTH_15 = 15;
+    private static final int AD_LENGTH_30 = 30;
+    private static final int AD_LENGTH_60 = 60;
 
     @BindView(R.id.video_view)
     protected VideoView mVideoView;
@@ -32,56 +36,78 @@ public class VideoActivity extends AppCompatActivity {
     @BindView(R.id.video_progress_bar)
     protected ProgressBar mVideoProgressBar;
 
+    @BindString(R.string.pref_advertisement_length_key)
+    protected String mAdLengthKey;
+
     private int mPausePosition;
+    private Realm mRealm;
+    private History mHistory;
+
+    private Runnable syncVideoProgress = new Runnable() {
+        @Override
+        public void run() {
+            if (mVideoProgressBar != null) {
+                mVideoProgressBar.setProgress(mVideoView.getCurrentPosition());
+            }
+            if (mVideoView.isPlaying()) {
+                mVideoProgressBar.postDelayed(syncVideoProgress, SYNC_INTERVAL);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // style이 dialog인데 다른 부분 터치하는 부분에 대한 설정
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
         setContentView(R.layout.activity_video);
         ButterKnife.bind(this);
+        mRealm.getDefaultInstance();
+        setFinishOnTouchOutside(false);
+        mHistory = new History();
 
-        // 왜 로그가 안찍히지...? 중간 재생 영상 불러오는게 되지 않는다.
-        Log.e(TAG, "onCreate: ");
-        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.advertisement_start, Snackbar.LENGTH_SHORT).show();
-
-        if (savedInstanceState != null) {
-            mPausePosition = savedInstanceState.getInt(getString(R.string.video_current_playing_time_key));
-        } else {
-            mPausePosition = 0;
+        Intent prev = getIntent();
+        if (prev.hasExtra(getString(R.string.beneficiary_key))) {
+            mHistory.setBeneficiary(prev.getIntExtra(R.string.beneficiary_key, 0));
         }
 
-        // 영상 선택 가능하게
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String adsLength  = sharedPreferences.getString(getString(R.string.pref_advertisement_length_key), getResources().getString(R.string.pref_advertisement_length_15));
+        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.advertisement_start,
+                Snackbar.LENGTH_SHORT).show();
 
-        // TODO: 2017-02-16 나중에 서버에서 저용량 광고영상을 내부 저장소로 가져오도록 바꾸자.
-        // TODO: 2017-02-16 앱 시작하면 서비스를 이용해서 서버에서 가져오는게 맞을듯...
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mHistory.setAdLength(sharedPreferences.getInt(mAdLengthKey, AD_LENGTH_15));
+
+        int advertisementRscId = -1;
+        switch (mHistory.getAdLength()) {
+            case AD_LENGTH_15:
+                advertisementRscId = R.raw.ad_15;
+                break;
+            case AD_LENGTH_30:
+                advertisementRscId = R.raw.ad_30;
+                break;
+            case AD_LENGTH_60:
+                advertisementRscId = R.raw.ad_60;
+                break;
+            default:
+                break;
+        }
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("android.resource://");
         stringBuilder.append(getPackageName());
         stringBuilder.append("/");
-        stringBuilder.append(R.raw.sample_video);
+        stringBuilder.append(advertisementRscId);
         mVideoView.setVideoURI(Uri.parse(stringBuilder.toString()));
         mVideoView.requestFocus();
 
-        // 액티비티가 시작되고 준비가 되면
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                // 소리는 안들리게
                 mp.setVolume(0, 0);
-                // 영상이 자동 시작
-                mVideoView.seekTo(mPausePosition);
                 mVideoView.start();
+                mVideoProgressBar.setMax(mVideoView.getDuration());
+                mVideoProgressBar.postDelayed(syncVideoProgress, SYNC_INTERVAL);
             }
         });
 
-        // 영상이 끝나면
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -89,50 +115,42 @@ public class VideoActivity extends AppCompatActivity {
             }
         });
 
-        // 비디오 뷰를 누르면 광고로 넘어가게
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                // TODO: 2017-02-19
                 openWebPage("http://www.naver.com");
-                // TODO: 2017-02-16 광고 db의 url로 바꾸기
                 doTasksAfterAdsEnded(true);
                 return true;
             }
         });
-
-        // 레이아웃 문제가 있음. 내용이 다 안 보임.
-
-        // 남은시간 표시 또는 프로그레스 바로 표시
-        //mProgressBar.setProgress(0);
-        //mProgressBar.setMax(PROGRESS_BAR_MAX);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume: ");
-        mVideoView.seekTo(mPausePosition);
-        mVideoView.start();
+        Log.w("aaaa", "onResume: " + String.valueOf(mPausePosition));
+//         TODO: 2017-02-19 seekTo is not working...
+//        mVideoView.seekTo(mPausePosition);
+//        mVideoView.start();
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-            doNothing();
-            return true;
-        }
-        // 뭐지 뒤 액티비티가 클릭이 되네?
+    protected void onPause() {
+        super.onPause();
+        mPausePosition = mVideoView.getCurrentPosition();
+        Log.w("aaaa", "onPause: " + String.valueOf(mPausePosition));
+    }
 
-        return super.onTouchEvent(event);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 
     @Override
     public void onBackPressed() {
-        doNothing();
-    }
-
-    private void doNothing() {
-
+        // Do nothing
     }
 
     private void openWebPage(String url) {
@@ -143,35 +161,22 @@ public class VideoActivity extends AppCompatActivity {
         }
     }
 
-    private void doTasksAfterAdsEnded(boolean isClicked) {
-        // TODO: 2017-02-16 mainactivity로 돌아가 포인트 쌓이는 애니메이션을 했으면 좋겠음.
-        //setResult(something);
-        // TODO: 2017-02-16   db에 기록
+    private void doTasksAfterAdsEnded(final boolean isClicked) {
+        // TODO: 2017-02-16 db에 기록
+        final User user = mRealm.where(User.class).findFirst();
+
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                History history = mRealm.createObject(History.class, History.getNextKey(mRealm));
+                history.setUserId(user.getId());
+                history.setDonateDate(System.currentTimeMillis());
+                history.setBeneficiary();
+                history.setAdLength(mHistory.getAdLength());
+                history.setClicked(isClicked);
+            }
+        });
+        setResult(RESULT_OK);
         finish();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        int currentPlayingTime = mVideoView.getCurrentPosition();
-        mVideoView.pause();
-        outState.putInt(getString(R.string.video_current_playing_time_key), currentPlayingTime);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(TAG, "onStop: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e(TAG, "onDestroy: ");
     }
 }

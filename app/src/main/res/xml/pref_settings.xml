@@ -7,7 +7,7 @@
         android:title="@string/pref_notification_title" />
 
     <ListPreference
-        android:defaultValue="@string/pref_advertisement_length_30"
+        android:defaultValue="@string/pref_advertisement_length_15"
         android:entries="@array/pref_advertisement_length_list_titles"
         android:entryValues="@array/pref_advertisement_length_list_values"
         android:key="@string/pref_advertisement_length_key"

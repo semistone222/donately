@@ -56,17 +56,6 @@ public class HistoryActivity extends AppCompatActivity {
     @OnClick(R.id.fab)
     void onClickFab(View view) {
         Snackbar.make(view, R.string.message_history, Snackbar.LENGTH_LONG).show();
-
-        // test : fake data
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                History history = mRealm.createObject(History.class, History.getNextKey(mRealm));
-                history.setDonateDate(System.currentTimeMillis());
-                history.setPoint((int) (Math.random() * 100));
-                history.setBeneficiary(((char) ('A' + (int) (Math.random() * 26))) + "");
-            }
-        });
     }
 
     @Override

@@ -15,13 +15,15 @@ public class History extends RealmObject {
     @PrimaryKey
     private int historyId;
 
-    private int userId;
+    private String userId;
 
     private long donateDate;
 
     private String beneficiary;
 
-    private int point;
+    private int adLength;
+
+    private boolean isClicked;
 
     public static int getNextKey(Realm realm) {
 
@@ -44,16 +46,16 @@ public class History extends RealmObject {
         this.historyId = historyId;
     }
 
-    public int getUserId() {
+    public long getDonateDate() {
+        return donateDate;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public long getDonateDate() {
-        return donateDate;
     }
 
     public void setDonateDate(long donateDate) {
@@ -68,11 +70,19 @@ public class History extends RealmObject {
         this.beneficiary = beneficiary;
     }
 
-    public int getPoint() {
-        return point;
+    public int getAdLength() {
+        return adLength;
     }
 
-    public void setPoint(int point) {
-        this.point = point;
+    public void setAdLength(int adLength) {
+        this.adLength = adLength;
+    }
+
+    public boolean isClicked() {
+        return isClicked;
+    }
+
+    public void setClicked(boolean clicked) {
+        isClicked = clicked;
     }
 }

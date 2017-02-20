@@ -23,6 +23,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -49,7 +50,30 @@
         <activity
             android:name=".video.VideoActivity"
             android:theme="@style/AppTheme.Video"/>
-        <activity android:name=".about.AboutActivity"></activity>
+        <activity
+            android:name=".about.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.main.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".about.OpenSourceActivity"
+            android:label="@string/title_activity_open_source"
+            android:parentActivityName=".about.AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.about.AboutActivity"/>
+        </activity>
+        <activity
+            android:name=".about.IntroduceActivity"
+            android:label="@string/title_activity_introduce"
+            android:parentActivityName=".about.AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.about.AboutActivity"/>
+        </activity>
 
         <service android:name=".background.BootService"/>
 

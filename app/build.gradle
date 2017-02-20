@@ -36,6 +36,7 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'io.realm:android-adapters:1.4.0'
     compile 'com.android.support:preference-v7:25.1.0'
+    compile 'com.android.support:preference-v14:25.1.0'
     compile 'com.google.android.gms:play-services-auth:8.3.0'
     compile 'com.github.paolorotolo:appintro:4.1.0'
     compile 'hanks.xyz:smallbang-library:0.1.2'

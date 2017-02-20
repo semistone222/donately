@@ -56,12 +56,15 @@
 
     <!--login-->
     <string name="facebook_app_id" translatable="false">389316754760661</string>
-    <string name="title_activity_settings">Settings</string>
     <string name="facebook_login">Log in with Facebook</string>
     <string name="google_login">Log in with Google</string>
 
     <!--activity-->
     <string name="title_activity_history">History</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_about">About</string>
+    <string name="title_activity_open_source">Open Source License</string>
+    <string name="title_activity_introduce">How we do...</string>
 
     <!--notification-->
     <string name="pref_notification_key" translatable="false">notification</string>
@@ -103,6 +106,18 @@
     <string name="pref_logout_title">Logout</string>
     <string name="pref_logout_key" translatable="false">logout</string>
 
+    <!--preference-->
+    <string name="pref_open_source_key" translatable="false">pref-open-source-key</string>
+    <string name="pref_open_source_title">Open Source License</string>
+    <string name="pref_open_source_summary">open source software about detailed license
+        information
+    </string>
+    <string name="pref_introduce_key" translatable="false">pref-introduce-key</string>
+    <string name="pref_introduce_title">How we do</string>
+    <string name="pref_version_key" translatable="false">pref-version-key</string>
+    <string name="pref_version_title">Version</string>
+    <string name="pref_version_summary">1.0.0</string>
+
     <!--content description-->
     <string name="cd_user_image">user image</string>
     <string name="cd_divider">divider</string>
@@ -119,4 +134,17 @@
         https://semistone222.github.io/donately/
     </string>
     <string name="tell_a_friend">Tell a Friend</string>
+
+    <!--open source-->
+    <string-array name="open_source_list">
+        <item>Android Open Source Project</item>
+        <item>Butter Knife</item>
+        <item>Facebook SDK for Android</item>
+        <item>Glide</item>
+        <item>Glide Transformations</item>
+        <item>Realm</item>
+        <item>Google APIs for Mobile</item>
+        <item>paolorotolo AppIntro</item>
+        <item>hanks.xyz smallbang</item>
+    </string-array>
 </resources>

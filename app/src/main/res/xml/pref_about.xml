@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="@string/pref_introduce_key"
+        android:title="@string/pref_introduce_title"/>
+
+    <Preference
+        android:key="@string/pref_version_key"
+        android:summary="@string/pref_version_summary"
+        android:title="@string/pref_version_title"/>
+
+    <Preference
+        android:key="@string/pref_open_source_key"
+        android:summary="@string/pref_open_source_summary"
+        android:title="@string/pref_open_source_title"/>
+</PreferenceScreen>

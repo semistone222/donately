@@ -1,19 +1,25 @@
 package com.semistone.donately.about;
 
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.semistone.donately.R;
 
-public class AboutActivity extends AppCompatActivity {
+/**
+ * Created by semistone on 2017-02-20.
+ */
+
+public class IntroduceActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_introduce);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

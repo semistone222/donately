@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -60,12 +59,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         LoginManager.getInstance().logOut();
                         break;
                     case User.GOOGLE:
-                        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                Toast.makeText(getActivity(), R.string.logout_success, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                                new ResultCallback<Status>() {
+                                    @Override
+                                    public void onResult(Status status) {
+                                        Toast.makeText(getActivity(), R.string.logout_success,
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                         break;
                     default:
                         break;
@@ -135,7 +136,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
+                GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())

@@ -3,7 +3,6 @@ package com.semistone.donately.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -27,8 +26,6 @@ import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
 import com.semistone.donately.video.VideoActivity;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -138,7 +135,8 @@ public class MainActivity extends AppCompatActivity
     @OnClick(R.id.fab)
     void onClickFab(View view) {
         Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-        intent.putExtra(getString(R.string.beneficiary_key), mTabLayout.getSelectedTabPosition());
+        intent.putExtra(getString(R.string.beneficiary_key),
+                mTabLayout.getSelectedTabPosition());
         startActivityForResult(intent, REQUEST_ADS);
     }
 
@@ -224,7 +222,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // TODO: 2017-02-20 이쁘게 배치... 툴바 없앨까 고려도 해보자 
+    // TODO: 2017-02-20 이쁘게 배치... 툴바 없앨까 고려도 해보자
+
     private void updatePointView(boolean isFromWatchingAd) {
         int count = 0;
         RealmResults<History> results = mRealm.where(History.class).findAll();

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
+import com.semistone.donately.about.AboutActivity;
 import com.semistone.donately.data.History;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
@@ -183,9 +184,15 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(new Intent(MainActivity.this, SettingsActivity.class),
                     REQUEST_EXIT);
         } else if (id == R.id.nav_about) {
-
-        } else if (id == R.id.nav_share) {
-
+            startActivity(new Intent(MainActivity.this, AboutActivity.class));
+        } else if (id == R.id.nav_tell) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.show_case_web_site));
+            Intent chooser = Intent.createChooser(intent, getString(R.string.tell_a_friend));
+            if (chooser.resolveActivity(getPackageManager()) != null) {
+                startActivity(chooser);
+            }
         }
 
         mDrawer.closeDrawer(GravityCompat.START);

@@ -64,5 +64,8 @@
         <receiver
             android:name=".background.NotificationReceiver"
             android:process=":remote" />
+
+        <activity android:name=".about.AboutActivity"></activity>
     </application>
+
 </manifest>

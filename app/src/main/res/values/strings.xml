@@ -39,7 +39,7 @@
     <string name="nav_history_title">History</string>
     <string name="nav_settings_title">Settings</string>
     <string name="nav_about_title">About</string>
-    <string name="nav_share_title">Share</string>
+    <string name="nav_tell_title">Tell a friend</string>
     <string name="nav_item_communicate">Communicate</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -101,4 +101,6 @@
     <string name="video_current_playing_time_key" translatable="false">video-current-playing-time</string>
 
     <string name="beneficiary_key" translatable="false">beneficiary-key</string>
+
+    <string name="show_case_web_site" translatable="false">https://semistone222.github.io/donately/</string>
 </resources>

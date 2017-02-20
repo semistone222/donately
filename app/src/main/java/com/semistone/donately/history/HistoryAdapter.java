@@ -24,7 +24,7 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class HistoryAdapter extends RealmRecyclerViewAdapter<History, HistoryAdapter.Holder> {
 
-    private final static String DATE_FORMAT = "yy/MM/dd hh:mm";
+    private final static String DATE_FORMAT = "yy/MM/dd HH:mm";
 
     public HistoryAdapter(Context context, OrderedRealmCollection<History> data) {
         super(context, data, true);

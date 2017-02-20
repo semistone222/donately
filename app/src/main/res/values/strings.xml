@@ -12,19 +12,29 @@
 
     <!--main fragment-->
     <string name="fragment_poverty_title">GIVE FOOD TO HUNGER</string>
-    <string name="fragment_poverty_description">Every day too many men and women across the globe struggle to feed their children a nutritious meal. Although we produce enough food to feed everyone, a lots of people dies from malnutrition.</string>
+    <string name="fragment_poverty_description">Every day too many men and women across the globe
+        struggle to feed their children a nutritious meal. Although we produce enough food to feed
+        everyone, a lots of people dies from malnutrition.
+    </string>
     <string name="fragment_poverty_beneficiary">World Food Programme</string>
 
     <string name="fragment_refugee_title">HELP REFUGEES</string>
-    <string name="fragment_refugee_description">You can provide critical emergency assistance in the form of clean water, sanitation and health care, as well as shelter, blankets, household goods and sometimes food.</string>
+    <string name="fragment_refugee_description">You can provide critical emergency assistance in the
+        form of clean water, sanitation and health care, as well as shelter, blankets, household
+        goods and sometimes food.
+    </string>
     <string name="fragment_refugee_beneficiary">UN Refugee Agency</string>
 
     <string name="fragment_animal_title">SAVE ANIMALS</string>
-    <string name="fragment_animal_description">There is a lot of abandoned or mistreated animals. They need your help.</string>
+    <string name="fragment_animal_description">There is a lot of abandoned or mistreated animals.
+        They need your help.
+    </string>
     <string name="fragment_animal_beneficiary">World Animal Protection International</string>
 
     <string name="fragment_environment_title">PROTECT ENVIRONMENT</string>
-    <string name="fragment_environment_description">Defending our oceans, protecting the world\'s ancient forests, creating a toxic free future and campaigning for sustainable agriculture.</string>
+    <string name="fragment_environment_description">Defending our oceans, protecting the world\'s
+        ancient forests, creating a toxic free future and campaigning for sustainable agriculture.
+    </string>
     <string name="fragment_environment_beneficiary">Green Peace</string>
 
     <!--user info-->
@@ -55,7 +65,9 @@
 
     <!--notification-->
     <string name="pref_notification_key" translatable="false">notification</string>
-    <string name="pref_notification_summary">We notify everyday for your daily donation. Turn this on, plz :)</string>
+    <string name="pref_notification_summary">We notify everyday for your daily donation. Turn this
+        on, plz :)
+    </string>
     <string name="pref_notification_title">Enable everyday notifications</string>
     <string name="encourage_donation_notification_title">Time\'s up!</string>
     <string name="encourage_donation_notification_body">Are you ready to Donate.ly?</string>
@@ -98,10 +110,16 @@
     <string name="cd_beneficiary_image">beneficiary image</string>
 
     <!--video-->
-    <string name="video_current_playing_time_key" translatable="false">video-current-playing-time</string>
+    <string name="video_current_playing_time_key" translatable="false">video-current-playing-time
+    </string>
 
     <string name="beneficiary_key" translatable="false">beneficiary-key</string>
 
-    <string name="show_case_web_site" translatable="false">https://semistone222.github.io/donately/</string>
+    <string name="show_case_web_site" translatable="false">
+        https://semistone222.github.io/donately/
+    </string>
     <string name="tell_a_friend">Tell a Friend</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

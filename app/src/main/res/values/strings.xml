@@ -103,4 +103,5 @@
     <string name="beneficiary_key" translatable="false">beneficiary-key</string>
 
     <string name="show_case_web_site" translatable="false">https://semistone222.github.io/donately/</string>
+    <string name="tell_a_friend">Tell a Friend</string>
 </resources>

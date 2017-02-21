@@ -25,8 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:text="@string/video_explanation"
+        android:text="@string/message_video_explanation"
         android:textColor="@color/colorSecondaryText"
         android:textStyle="italic"
-        tools:text="@string/video_explanation" />
+        tools:text="@string/message_video_explanation" />
 </LinearLayout>

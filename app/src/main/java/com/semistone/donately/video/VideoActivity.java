@@ -70,7 +70,7 @@ public class VideoActivity extends AppCompatActivity {
 //            mHistory.setBeneficiary(prev.getIntExtra(R.string.beneficiary_key, 0));
         }
 
-        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.advertisement_start,
+        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.message_advertisement_start,
                 Snackbar.LENGTH_SHORT).show();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);

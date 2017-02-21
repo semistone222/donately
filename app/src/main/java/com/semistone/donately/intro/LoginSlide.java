@@ -129,13 +129,13 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
                     @Override
                     public void onCancel() {
                         Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-                                R.string.login_canceled, Snackbar.LENGTH_SHORT).show();
+                                R.string.message_login_canceled, Snackbar.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException error) {
                         Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-                                R.string.login_error, Snackbar.LENGTH_SHORT).show();
+                                R.string.message_login_error, Snackbar.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -234,7 +234,7 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
             getActivity().finish();
         } else {
             Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
-                    R.string.login_error, Snackbar.LENGTH_SHORT).show();
+                    R.string.message_login_error, Snackbar.LENGTH_SHORT).show();
         }
     }
 

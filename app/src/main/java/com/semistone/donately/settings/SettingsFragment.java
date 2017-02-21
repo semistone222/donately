@@ -63,7 +63,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                                 new ResultCallback<Status>() {
                                     @Override
                                     public void onResult(Status status) {
-                                        Toast.makeText(getActivity(), R.string.logout_success,
+                                        Toast.makeText(getActivity(), R.string.message_logout_success,
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 });

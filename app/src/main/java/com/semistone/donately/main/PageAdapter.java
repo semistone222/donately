@@ -11,11 +11,11 @@ import java.util.List;
  * Created by semistone on 2017-02-21.
  */
 
-public class MainAdapter extends FragmentPagerAdapter {
+public class PageAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public MainAdapter(FragmentManager manager) {
+    public PageAdapter(FragmentManager manager) {
         super(manager);
     }
 

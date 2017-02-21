@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/history_empty"
+        android:text="@string/message_history_empty"
         android:visibility="gone"
         tools:text="No history yet, Try to donate!" />
 

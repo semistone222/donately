@@ -14,9 +14,9 @@ public class IntroActivity extends AppIntro {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addSlide(AppIntroFragment.newInstance(getString(R.string.onboaderpage1_title), getString(R.string.onboaderpage1_description), R.drawable.ic_loving, ContextCompat.getColor(this, R.color.colorAccent)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.onboaderpage2_title), getString(R.string.onboaderpage2_description), R.drawable.ic_video_play, ContextCompat.getColor(this, R.color.colorAccent)));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.onboaderpage3_title), getString(R.string.onboaderpage3_description), R.drawable.ic_free, ContextCompat.getColor(this, R.color.colorAccent)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro1_title), getString(R.string.intro1_description), R.drawable.ic_loving, ContextCompat.getColor(this, R.color.colorAccent)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro2_title), getString(R.string.intro2_description), R.drawable.ic_video_play, ContextCompat.getColor(this, R.color.colorAccent)));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro3_title), getString(R.string.intro3_description), R.drawable.ic_free, ContextCompat.getColor(this, R.color.colorAccent)));
         addSlide(LoginSlide.newInstance(R.layout.intro_login));
         setDoneText(null);
     }

@@ -16,27 +16,31 @@
 
 package com.semistone.donately.main;
 
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
+import com.semistone.donately.data.Content;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 public class DetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_POSITION = "position";
+    public static final String CONTENT_ID = "content-id";
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
@@ -47,11 +51,13 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.text_view_detail)
     protected TextView mTextViewDetail;
 
-    @BindView(R.id.text_view_location)
-    protected TextView mTextViewLocation;
+    @BindView(R.id.text_view_item)
+    protected TextView mTextViewItem;
 
-    @BindView(R.id.image)
+    @BindView(R.id.image_view)
     protected ImageView mImageView;
+
+    private Realm mRealm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,27 +67,46 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int position = getIntent().getIntExtra(EXTRA_POSITION, 0);
-        Resources resources = getResources();
+        int contentId = getIntent().getIntExtra(CONTENT_ID, 0);
+        mRealm = Realm.getDefaultInstance();
 
-        String[] places = resources.getStringArray(R.array.places);
-        mCollapsingToolbarLayout.setTitle(places[position % places.length]);
+        Content content = mRealm.where(Content.class).equalTo(Content.ID, contentId).findFirst();
 
-        String[] placeDetails = resources.getStringArray(R.array.place_details);
-        mTextViewDetail.setText(placeDetails[position % placeDetails.length]);
-
-        String[] placeLocations = resources.getStringArray(R.array.place_locations);
-        mTextViewLocation.setText(placeLocations[position % placeLocations.length]);
-
-        TypedArray placePictures = resources.obtainTypedArray(R.array.places_picture);
-        mImageView.setImageDrawable(placePictures.getDrawable(position % placePictures.length()));
-
-        placePictures.recycle();
+        mCollapsingToolbarLayout.setTitle(content.getTitle());
+        mTextViewDetail.setText(content.getDescription());
+        mTextViewItem.setText(content.getDescription2());
+        Glide.with(this).load(content.getPictureUrl()).into(mImageView);
     }
 
     @OnClick(R.id.action_button)
     protected void onClickActionButton(View v) {
-        Snackbar.make(v, "Action is pressed",
+        Snackbar.make(v, "Action",
                 Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.string.action_favorite) {
+            Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (id == R.string.action_link) {
+            Toast.makeText(this, "Link", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 }

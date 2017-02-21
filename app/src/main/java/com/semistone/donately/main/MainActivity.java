@@ -2,12 +2,9 @@ package com.semistone.donately.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,15 +19,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.about.AboutActivity;
+import com.semistone.donately.data.Content;
 import com.semistone.donately.data.History;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
-import com.semistone.donately.video.VideoActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -94,8 +87,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(mToolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawer, mToolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
+                this, mDrawer, mToolbar, R.string.nav_open,
+                R.string.nav_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -112,14 +105,15 @@ public class MainActivity extends AppCompatActivity
                 .override(150, 150)
                 .into((ImageView) mNavHeader.findViewById(R.id.iv_user_image));
 
-        MainAdapter adapter = new MainAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CardContentFragment(), "Org");
-        adapter.addFragment(new TileContentFragment(), "People");
-//        adapter.addFragment(new FavoriteFragment(), "♡");
+        PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
+        adapter.addFragment(CardContentFragment.newInstance(Content.TYPE_ORG), "Org");
+        adapter.addFragment(CardContentFragment.newInstance(Content.TYPE_PEOPLE), "People");
+        adapter.addFragment(new FavoriteTileContentFragment(), "♡");
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
+// TODO: 2017-02-21
 //    @OnClick(R.id.fab)
 //    void onClickFab(View view) {
 //        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
@@ -192,7 +186,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     // TODO: 2017-02-20 이쁘게 배치... 툴바 없앨까 고려도 해보자 UI 제대로...
-
     private void updatePointView(boolean isFromWatchingAd) {
         int count = 0;
         RealmResults<History> results = mRealm.where(History.class).findAll();
@@ -204,5 +197,42 @@ public class MainActivity extends AppCompatActivity
         if (isFromWatchingAd) {
             mSmallBang.bang(mTvDonatePoint);
         }
+    }
+
+    //    test
+    @OnClick(R.id.fab)
+    protected void onClickFab(View view) {
+        mRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Content content = mRealm.createObject(Content.class, Content.getNextKey(mRealm));
+                content.setTitle(getString(R.string.item_title));
+                content.setDescription(getString(R.string.detail_desc));
+                content.setDescription2(getString(R.string.detail_desc2));
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("android.resource://");
+                stringBuilder.append(getPackageName());
+                stringBuilder.append("/");
+                stringBuilder.append(R.drawable.a);
+                content.setPictureUrl(stringBuilder.toString());
+                content.setLinkUrl(getString(R.string.show_case_web_site));
+                content.setType(getRandomType());
+                content.setFavorite(getRandomBoolean());
+            }
+        });
+    }
+
+    // test
+    public static String getRandomType() {
+        if (getRandomBoolean()) {
+            return Content.TYPE_ORG;
+        } else {
+            return Content.TYPE_PEOPLE;
+        }
+    }
+
+    //test
+    public static boolean getRandomBoolean() {
+        return Math.random() < 0.5;
     }
 }

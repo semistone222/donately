@@ -28,6 +28,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".main.DetailActivity"
+            android:parentActivityName=".main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
             android:name=".intro.IntroActivity"
             android:theme="@style/AppTheme.Intro"/>
         <activity

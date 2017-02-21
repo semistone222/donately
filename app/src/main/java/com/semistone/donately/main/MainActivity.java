@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,6 +29,9 @@ import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
 import com.semistone.donately.video.VideoActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -50,9 +56,6 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawer;
-
-    @BindView(R.id.collapsing_toolbar_layout)
-    protected CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     @BindView(R.id.tab_layout)
     protected TabLayout mTabLayout;
@@ -90,8 +93,6 @@ public class MainActivity extends AppCompatActivity
 
         setSupportActionBar(mToolbar);
 
-        mCollapsingToolbarLayout.setTitle(mAppName);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
@@ -111,34 +112,21 @@ public class MainActivity extends AppCompatActivity
                 .override(150, 150)
                 .into((ImageView) mNavHeader.findViewById(R.id.iv_user_image));
 
-        MainAdapter mainAdapter = new MainAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mainAdapter);
+        MainAdapter adapter = new MainAdapter(getSupportFragmentManager());
+        adapter.addFragment(new CardContentFragment(), "Org");
+        adapter.addFragment(new TileContentFragment(), "People");
+//        adapter.addFragment(new FavoriteFragment(), "♡");
+        mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
-    @OnClick(R.id.fab)
-    void onClickFab(View view) {
-        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-        intent.putExtra(getString(R.string.beneficiary_key),
-                mTabLayout.getSelectedTabPosition());
-        startActivityForResult(intent, REQUEST_ADS);
-    }
+//    @OnClick(R.id.fab)
+//    void onClickFab(View view) {
+//        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+//        intent.putExtra(getString(R.string.beneficiary_key),
+//                mTabLayout.getSelectedTabPosition());
+//        startActivityForResult(intent, REQUEST_ADS);
+//    }
 
     @Override
     public void onBackPressed() {
@@ -147,25 +135,6 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -222,7 +191,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // TODO: 2017-02-20 이쁘게 배치... 툴바 없앨까 고려도 해보자
+    // TODO: 2017-02-20 이쁘게 배치... 툴바 없앨까 고려도 해보자 UI 제대로...
 
     private void updatePointView(boolean isFromWatchingAd) {
         int count = 0;

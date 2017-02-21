@@ -85,7 +85,7 @@ public class FavoriteTileContentFragment extends Fragment {
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.CONTENT_ID, data.getId());
+                    intent.putExtra(DetailActivity.EXTRA_DETAIL_CONTENT_ID, data.getId());
                     context.startActivity(intent);
                 }
             });

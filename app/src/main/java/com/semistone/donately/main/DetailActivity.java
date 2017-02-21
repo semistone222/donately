@@ -16,6 +16,8 @@
 
 package com.semistone.donately.main;
 
+import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -24,15 +26,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.data.Content;
+import com.semistone.donately.utility.IntentUtils;
+import com.semistone.donately.video.VideoActivity;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,24 +43,26 @@ import io.realm.Realm;
 
 public class DetailActivity extends AppCompatActivity {
 
-    public static final String CONTENT_ID = "content-id";
+    public static final String EXTRA_DETAIL_CONTENT_ID = "extra-detail-content-id";
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
-
     @BindView(R.id.collapsing_toolbar)
     protected CollapsingToolbarLayout mCollapsingToolbarLayout;
-
     @BindView(R.id.text_view_detail)
     protected TextView mTextViewDetail;
-
     @BindView(R.id.text_view_item)
     protected TextView mTextViewItem;
-
     @BindView(R.id.image_view)
     protected ImageView mImageView;
+    @BindColor(R.color.heart)
+    protected int colorHeart;
+    @BindColor(R.color.white)
+    protected int colorWhite;
 
     private Realm mRealm;
+    private Content mContent;
+    private Menu mMenu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,41 +72,66 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        int contentId = getIntent().getIntExtra(CONTENT_ID, 0);
+        int contentId = getIntent().getIntExtra(EXTRA_DETAIL_CONTENT_ID, 0);
         mRealm = Realm.getDefaultInstance();
 
-        Content content = mRealm.where(Content.class).equalTo(Content.ID, contentId).findFirst();
+        mContent = mRealm.where(Content.class).equalTo(Content.ID, contentId).findFirst();
 
-        mCollapsingToolbarLayout.setTitle(content.getTitle());
-        mTextViewDetail.setText(content.getDescription());
-        mTextViewItem.setText(content.getDescription2());
-        Glide.with(this).load(content.getPictureUrl()).into(mImageView);
+        mCollapsingToolbarLayout.setTitle(mContent.getTitle());
+        mTextViewDetail.setText(mContent.getDescription());
+        mTextViewItem.setText(mContent.getDescription2());
+        Glide.with(this).load(mContent.getPictureUrl()).into(mImageView);
     }
 
     @OnClick(R.id.action_button)
     protected void onClickActionButton(View v) {
-        Snackbar.make(v, "Action",
-                Snackbar.LENGTH_SHORT).show();
+        Intent intent = new Intent(DetailActivity.this, VideoActivity.class);
+        intent.putExtra(VideoActivity.EXTRA_VIDEO_CONTENT_ID, mContent.getId());
+        startActivity(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detail, menu);
+        mMenu = menu;
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        updateFavoriteMenuItem(mContent.isFavorite());
+        return super.onPrepareOptionsMenu(menu);
+    }
 
-        if (id == R.string.action_favorite) {
-            Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int id = item.getItemId();
+
+        if (id == R.id.action_favorite) {
+            final Content content = mRealm.where(Content.class).equalTo(Content.ID, mContent.getId()).findFirst();
+            final boolean newFavorite = !content.isFavorite();
+            mRealm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    content.setFavorite(newFavorite);
+                    updateFavoriteMenuItem(newFavorite);
+                }
+            });
+            if (newFavorite) {
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Added to Favorites.", Snackbar.LENGTH_SHORT).show();
+            }
             return true;
-        } else if (id == R.string.action_link) {
-            Toast.makeText(this, "Link", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_link) {
+            IntentUtils.openWebpage(this, mContent.getLinkUrl());
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateFavoriteMenuItem(boolean isFavorite) {
+        int iconColor = isFavorite? colorHeart : colorWhite;
+        MenuItem targetItem = mMenu.findItem(R.id.action_favorite);
+        targetItem.getIcon().setColorFilter(iconColor, PorterDuff.Mode.SRC_ATOP);
     }
 
     @Override

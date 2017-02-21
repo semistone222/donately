@@ -17,6 +17,7 @@ import android.widget.VideoView;
 import com.semistone.donately.R;
 import com.semistone.donately.data.History;
 import com.semistone.donately.data.User;
+import com.semistone.donately.utility.IntentUtils;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -25,6 +26,7 @@ import io.realm.Realm;
 
 public class VideoActivity extends AppCompatActivity {
 
+    public static final String EXTRA_VIDEO_CONTENT_ID = "extra-video-content-id";
     private static final long SYNC_INTERVAL = 1000;
     private static final int AD_LENGTH_15 = 15;
     private static final int AD_LENGTH_30 = 30;
@@ -32,13 +34,12 @@ public class VideoActivity extends AppCompatActivity {
 
     @BindView(R.id.video_view)
     protected VideoView mVideoView;
-
     @BindView(R.id.video_progress_bar)
     protected ProgressBar mVideoProgressBar;
-
     @BindString(R.string.pref_advertisement_length_key)
     protected String mAdLengthKey;
 
+    private int mContentId;
     private int mPausePosition;
     private Realm mRealm;
     private History mHistory;
@@ -59,19 +60,14 @@ public class VideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+        setFinishOnTouchOutside(false);
         ButterKnife.bind(this);
         mRealm = Realm.getDefaultInstance();
-        setFinishOnTouchOutside(false);
         mHistory = new History();
 
-        Intent prev = getIntent();
-        if (prev.hasExtra(getString(R.string.beneficiary_key))) {
-            // TODO: 2017-02-20  
-//            mHistory.setBeneficiary(prev.getIntExtra(R.string.beneficiary_key, 0));
-        }
-
-        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.message_advertisement_start,
-                Snackbar.LENGTH_SHORT).show();
+        // TODO: 2017-02-21 다 수정해야 함... 받는 것 까지만 어찌해봄. 뒤에 다 이상할듯 
+        mContentId = getIntent().getIntExtra(EXTRA_VIDEO_CONTENT_ID, 0);
+        mHistory.setContentId(mContentId);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String adLength = sharedPreferences.getString(mAdLengthKey, getString(R.string.pref_advertisement_length_15));
@@ -121,7 +117,7 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (!mHistory.isClicked()) {
-                    openWebPage("http://www.naver.com");
+                    IntentUtils.openWebpage(v.getContext(), "http://www.naver.com");
                     doTasksAfterAdsEnded();
                     mHistory.setClicked(true);
                 }
@@ -155,14 +151,6 @@ public class VideoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Do nothing
-    }
-
-    private void openWebPage(String url) {
-        Uri webPage = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
     }
 
     private void doTasksAfterAdsEnded() {

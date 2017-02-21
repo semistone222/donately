@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final static int REQUEST_EXIT = 1342;
-    private final static int REQUEST_ADS = 1523;
 
     @BindString(R.string.app_name)
     protected String mAppName;
@@ -113,15 +112,6 @@ public class MainActivity extends AppCompatActivity
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-// TODO: 2017-02-21
-//    @OnClick(R.id.fab)
-//    void onClickFab(View view) {
-//        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-//        intent.putExtra(getString(R.string.beneficiary_key),
-//                mTabLayout.getSelectedTabPosition());
-//        startActivityForResult(intent, REQUEST_ADS);
-//    }
-
     @Override
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
@@ -175,17 +165,12 @@ public class MainActivity extends AppCompatActivity
                     finish();
                 }
                 break;
-            case REQUEST_ADS:
-                if (resultCode == RESULT_OK) {
-                    updatePointView(true);
-                }
-                break;
             default:
                 break;
         }
     }
 
-    // TODO: 2017-02-20 이쁘게 배치... 툴바 없앨까 고려도 해보자 UI 제대로...
+    // TODO: 2017-02-20 RealmObject changeListener. 숫자 표시도 좀 예쁘게
     private void updatePointView(boolean isFromWatchingAd) {
         int count = 0;
         RealmResults<History> results = mRealm.where(History.class).findAll();

@@ -17,6 +17,8 @@ public class History extends RealmObject {
 
     private String userId;
 
+    private int contentId;
+
     private long donateDate;
 
     private String beneficiary;
@@ -44,6 +46,14 @@ public class History extends RealmObject {
 
     public void setHistoryId(int historyId) {
         this.historyId = historyId;
+    }
+
+    public int getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(int contentId) {
+        this.contentId = contentId;
     }
 
     public long getDonateDate() {

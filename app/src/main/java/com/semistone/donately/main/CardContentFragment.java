@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.data.Content;
+import com.semistone.donately.utility.IntentUtils;
+import com.semistone.donately.video.VideoActivity;
 
 import butterknife.BindColor;
 import butterknife.BindView;
@@ -105,10 +107,10 @@ public class CardContentFragment extends Fragment {
         protected ImageButton favoriteImageButton;
         @BindView(R.id.link_button)
         protected ImageButton linkImageButton;
-        @BindColor(R.color.colorPrimary)
-        protected int colorPrimary;
+        @BindColor(R.color.heart)
+        protected int colorHeart;
         @BindColor(R.color.button_grey)
-        protected int buttonGrey;
+        protected int colorGrey;
 
         private Content data;
         private Realm mRealm;
@@ -122,7 +124,7 @@ public class CardContentFragment extends Fragment {
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra(DetailActivity.CONTENT_ID, data.getId());
+                    intent.putExtra(DetailActivity.EXTRA_DETAIL_CONTENT_ID, data.getId());
                     context.startActivity(intent);
                 }
             });
@@ -130,8 +132,10 @@ public class CardContentFragment extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Snackbar.make(v, String.valueOf(data.getId()),
-                            Snackbar.LENGTH_SHORT).show();
+                    Context context = itemView.getContext();
+                    Intent intent = new Intent(context, VideoActivity.class);
+                    intent.putExtra(VideoActivity.EXTRA_VIDEO_CONTENT_ID, data.getId());
+                    context.startActivity(intent);
                 }
             });
 
@@ -139,17 +143,16 @@ public class CardContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     mRealm = Realm.getDefaultInstance();
-                    Content content = mRealm.where(Content.class).equalTo(Content.ID, data.getId()).findFirst();
+                    final Content content = mRealm.where(Content.class).equalTo(Content.ID, data.getId()).findFirst();
                     final boolean newFavorite = !content.isFavorite();
                     mRealm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            Content subject = realm.where(Content.class).equalTo(Content.ID, data.getId()).findFirst();
-                            subject.setFavorite(newFavorite);
+                            content.setFavorite(newFavorite);
                             updateFavoriteImageButton(newFavorite);
                         }
                     });
-                    if(newFavorite) {
+                    if (newFavorite) {
                         Snackbar.make(v, "Added to Favorites.", Snackbar.LENGTH_SHORT).show();
                     }
                     mRealm.close();
@@ -159,23 +162,14 @@ public class CardContentFragment extends Fragment {
             linkImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openWebPage(data.getLinkUrl());
+                    IntentUtils.openWebpage(itemView.getContext(), data.getLinkUrl());
                 }
             });
         }
 
-        public void updateFavoriteImageButton(boolean isFavorite) {
-            int iconColor = isFavorite ? colorPrimary : buttonGrey;
+        private void updateFavoriteImageButton(boolean isFavorite) {
+            int iconColor = isFavorite ? colorHeart : colorGrey;
             favoriteImageButton.setColorFilter(iconColor);
-        }
-
-        private void openWebPage(String url) {
-            // TODO: 2017-02-21  
-//            Uri webPage = Uri.parse(url);
-//            Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
-//            if (intent.resolveActivity(mContext.getPackageManager()) != null) {
-//                mContext.startActivity(intent);
-//            }
         }
     }
 

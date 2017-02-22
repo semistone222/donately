@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import xyz.hanks.library.SmallBang;
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.tv_donate_point)
     protected TextView mTvDonatePoint;
 
-    private SmallBang mSmallBang;
     private Realm mRealm;
 
     @Override
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mSmallBang = SmallBang.attach2Window(this);
 
         mRealm = Realm.getDefaultInstance();
         User user = mRealm.where(User.class).findFirst();
@@ -80,8 +79,6 @@ public class MainActivity extends AppCompatActivity
             finish();
             return;
         }
-
-        updatePointView(false);
 
         setSupportActionBar(mToolbar);
 
@@ -105,11 +102,13 @@ public class MainActivity extends AppCompatActivity
                 .into((ImageView) mNavHeader.findViewById(R.id.iv_user_image));
 
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
-        adapter.addFragment(CardContentFragment.newInstance(Content.TYPE_ORG), "Org");
+        adapter.addFragment(CardContentFragment.newInstance(Content.TYPE_ORG), "Organization");
         adapter.addFragment(CardContentFragment.newInstance(Content.TYPE_PEOPLE), "People");
-        adapter.addFragment(new FavoriteTileContentFragment(), "♡");
+        adapter.addFragment(new FavoriteTileContentFragment(), "Favorite");
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        setupPointView();
     }
 
     @Override
@@ -170,27 +169,32 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // TODO: 2017-02-20 RealmObject changeListener. 숫자 표시도 좀 예쁘게
-    private void updatePointView(boolean isFromWatchingAd) {
-        int count = 0;
-        RealmResults<History> results = mRealm.where(History.class).findAll();
-        for (History history : results) {
-            count += history.getAdLength();
-        }
-        mTvDonatePoint.setText(String.valueOf(count));
-
-        if (isFromWatchingAd) {
-            mSmallBang.bang(mTvDonatePoint);
-        }
+    private void setupPointView() {
+        final RealmResults<History> results = mRealm.where(History.class).findAll();
+        mTvDonatePoint.setText(String.valueOf(getPoint(results)));
+        results.addChangeListener(new RealmChangeListener<RealmResults<History>>() {
+            @Override
+            public void onChange(RealmResults<History> element) {
+                mTvDonatePoint.setText(String.valueOf(getPoint(results)));
+            }
+        });
     }
 
-    //    test
+    private int getPoint(RealmResults<History> results) {
+        int ret = 0;
+        for (History history : results) {
+            ret += history.getAdLength();
+        }
+        return ret;
+    }
+
+    // TEST
     @OnClick(R.id.fab)
     protected void onClickFab(View view) {
         mRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Content content = mRealm.createObject(Content.class, Content.getNextKey(mRealm));
+                Content content = realm.createObject(Content.class, Content.getNextKey(mRealm));
                 content.setTitle(getString(R.string.item_title));
                 content.setDescription(getString(R.string.detail_desc));
                 content.setDescription2(getString(R.string.detail_desc2));
@@ -207,7 +211,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    // test
+    // TEST
     public static String getRandomType() {
         if (getRandomBoolean()) {
             return Content.TYPE_ORG;
@@ -216,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //test
+    // TEST
     public static boolean getRandomBoolean() {
         return Math.random() < 0.5;
     }

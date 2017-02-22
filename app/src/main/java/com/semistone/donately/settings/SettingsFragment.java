@@ -75,7 +75,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 mRealm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        mRealm.deleteAll();
+                        realm.deleteAll();
                     }
                 });
 

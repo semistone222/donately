@@ -1,5 +1,6 @@
 package com.semistone.donately.data;
 
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -9,6 +10,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class VideoAd extends RealmObject {
 
+    public static final String ID = "id";
     public static final String LENGTH = "length";
 
     @PrimaryKey
@@ -16,6 +18,19 @@ public class VideoAd extends RealmObject {
     int length;
     String fileUrl;
     String promotionUrl;
+
+    public static int getNextKey(Realm realm) {
+
+        int id;
+
+        try {
+            id = realm.where(VideoAd.class).max(VideoAd.ID).intValue() + 1;
+        } catch (Exception e) {
+            id = 0;
+        }
+
+        return id;
+    }
 
     public int getId() {
         return id;

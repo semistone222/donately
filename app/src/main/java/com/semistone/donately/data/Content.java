@@ -17,6 +17,8 @@ public class Content extends RealmObject {
     public static final String TYPE_ORG = "type-org";
     public static final String TYPE_PEOPLE = "type-people";
 
+    // TODO: 2017-02-22 프로그레스바, 퍼센트, 목표 금액....!?
+
     @PrimaryKey
     int id;
     String title;

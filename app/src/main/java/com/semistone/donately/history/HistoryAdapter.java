@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.semistone.donately.R;
+import com.semistone.donately.data.Content;
 import com.semistone.donately.data.History;
 
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
+import io.realm.Realm;
 import io.realm.RealmRecyclerViewAdapter;
 
 /**
@@ -41,20 +43,23 @@ public class HistoryAdapter extends RealmRecyclerViewAdapter<History, HistoryAda
         History history = getData().get(position);
         holder.data = history;
         holder.tvCount.setText(String.valueOf(getItemCount() - position));
-        holder.tvBeneficiary.setText(history.getBeneficiary());
+        Realm realm = Realm.getDefaultInstance();
+        Content content = realm.where(Content.class).equalTo(Content.ID, history.getContentId()).findFirst();
+        holder.tvDonateTarget.setText(content.getTitle());
+        realm.close();
         long donateDate = history.getDonateDate();
         String donateDateStr = (new SimpleDateFormat(DATE_FORMAT, Locale.US)).format(donateDate);
         holder.tvDonateDate.setText(donateDateStr);
         holder.tvAdLength.setText(String.valueOf(history.getAdLength()));
-        holder.itemView.setTag(history.getHistoryId());
+        holder.itemView.setTag(history.getId());
     }
 
     class Holder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_count)
         protected TextView tvCount;
 
-        @BindView(R.id.tv_beneficiary)
-        protected TextView tvBeneficiary;
+        @BindView(R.id.tv_donate_target)
+        protected TextView tvDonateTarget;
 
         @BindView(R.id.tv_donate_date)
         protected TextView tvDonateDate;

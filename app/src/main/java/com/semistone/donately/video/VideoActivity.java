@@ -1,11 +1,9 @@
 package com.semistone.donately.video;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +15,7 @@ import android.widget.VideoView;
 import com.semistone.donately.R;
 import com.semistone.donately.data.History;
 import com.semistone.donately.data.User;
+import com.semistone.donately.data.VideoAd;
 import com.semistone.donately.utility.IntentUtils;
 
 import butterknife.BindString;
@@ -39,10 +38,10 @@ public class VideoActivity extends AppCompatActivity {
     @BindString(R.string.pref_advertisement_length_key)
     protected String mAdLengthKey;
 
-    private int mContentId;
     private int mPausePosition;
     private Realm mRealm;
     private History mHistory;
+    private VideoAd mVideoAd;
 
     private Runnable syncVideoProgress = new Runnable() {
         @Override
@@ -65,37 +64,41 @@ public class VideoActivity extends AppCompatActivity {
         mRealm = Realm.getDefaultInstance();
         mHistory = new History();
 
-        // TODO: 2017-02-21 다 수정해야 함... 받는 것 까지만 어찌해봄. 뒤에 다 이상할듯 
-        mContentId = getIntent().getIntExtra(EXTRA_VIDEO_CONTENT_ID, 0);
-        mHistory.setContentId(mContentId);
+        // TODO: 2017-02-21 다 수정해야 함... 받는 것 까지만 어찌해봄. 뒤에 다 이상할듯
+        // todo 테스트 만들어보자
+        int contentId = getIntent().getIntExtra(EXTRA_VIDEO_CONTENT_ID, 0);
+        mHistory.setContentId(contentId);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String adLength = sharedPreferences.getString(mAdLengthKey, getString(R.string.pref_advertisement_length_15));
-        mHistory.setAdLength(Integer.valueOf(adLength));
+        String adLengthStr = sharedPreferences.getString(mAdLengthKey, getString(R.string.pref_advertisement_length_15));
+        int adLength = Integer.valueOf(adLengthStr);
+        mVideoAd = mRealm.where(VideoAd.class).equalTo(VideoAd.LENGTH, adLength).findFirst();
+        mHistory.setAdLength(adLength);
+//
+//        int advertisementRscId = -1;
+//        switch (mHistory.getAdLength()) {
+//            case AD_LENGTH_15:
+//                advertisementRscId = R.raw.ad_15;
+//                break;
+//            case AD_LENGTH_30:
+//                advertisementRscId = R.raw.ad_30;
+//                break;
+//            case AD_LENGTH_60:
+//                advertisementRscId = R.raw.ad_60;
+//                break;
+//            default:
+//                break;
+//        }
+//
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("android.resource://");
+//        stringBuilder.append(getPackageName());
+//        stringBuilder.append("/");
+//        stringBuilder.append(advertisementRscId);
+//        mVideoView.setVideoURI(Uri.parse(stringBuilder.toString()));
 
-        int advertisementRscId = -1;
-        switch (mHistory.getAdLength()) {
-            case AD_LENGTH_15:
-                advertisementRscId = R.raw.ad_15;
-                break;
-            case AD_LENGTH_30:
-                advertisementRscId = R.raw.ad_30;
-                break;
-            case AD_LENGTH_60:
-                advertisementRscId = R.raw.ad_60;
-                break;
-            default:
-                break;
-        }
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("android.resource://");
-        stringBuilder.append(getPackageName());
-        stringBuilder.append("/");
-        stringBuilder.append(advertisementRscId);
-        mVideoView.setVideoURI(Uri.parse(stringBuilder.toString()));
+        mVideoView.setVideoURI(Uri.parse(mVideoAd.getFileUrl()));
         mVideoView.requestFocus();
-
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -105,19 +108,17 @@ public class VideoActivity extends AppCompatActivity {
                 mVideoProgressBar.postDelayed(syncVideoProgress, SYNC_INTERVAL);
             }
         });
-
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 doTasksAfterAdsEnded();
             }
         });
-
         mVideoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (!mHistory.isClicked()) {
-                    IntentUtils.openWebpage(v.getContext(), "http://www.naver.com");
+                    IntentUtils.openWebpage(v.getContext(), mVideoAd.getPromotionUrl());
                     doTasksAfterAdsEnded();
                     mHistory.setClicked(true);
                 }
@@ -160,13 +161,12 @@ public class VideoActivity extends AppCompatActivity {
             public void execute(Realm realm) {
                 History history = mRealm.createObject(History.class, History.getNextKey(mRealm));
                 history.setUserId(user.getId());
+                history.setContentId(mHistory.getContentId());
                 history.setDonateDate(System.currentTimeMillis());
-                history.setBeneficiary(mHistory.getBeneficiary());
                 history.setAdLength(mHistory.getAdLength());
                 history.setClicked(mHistory.isClicked());
             }
         });
-        setResult(RESULT_OK);
         finish();
     }
 }

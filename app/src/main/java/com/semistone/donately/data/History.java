@@ -9,22 +9,15 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class History extends RealmObject {
-    public static final String ID = "historyId";
+    public static final String ID = "id";
     public static final String DONATE_DATE = "donateDate";
 
     @PrimaryKey
-    private int historyId;
-
+    private int id;
     private String userId;
-
     private int contentId;
-
     private long donateDate;
-
-    private String beneficiary;
-
     private int adLength;
-
     private boolean isClicked;
 
     public static int getNextKey(Realm realm) {
@@ -40,12 +33,12 @@ public class History extends RealmObject {
         return id;
     }
 
-    public int getHistoryId() {
-        return historyId;
+    public int getId() {
+        return id;
     }
 
-    public void setHistoryId(int historyId) {
-        this.historyId = historyId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getContentId() {
@@ -70,14 +63,6 @@ public class History extends RealmObject {
 
     public void setDonateDate(long donateDate) {
         this.donateDate = donateDate;
-    }
-
-    public String getBeneficiary() {
-        return beneficiary;
-    }
-
-    public void setBeneficiary(String beneficiary) {
-        this.beneficiary = beneficiary;
     }
 
     public int getAdLength() {

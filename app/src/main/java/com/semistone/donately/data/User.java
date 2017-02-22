@@ -15,15 +15,10 @@ public class User extends RealmObject {
 
     @PrimaryKey
     private String id;
-
     private String name;
-
     private String email;
-
     private String accessToken;
-
     private String type;
-
     private String photoUrl;
 
     @Override

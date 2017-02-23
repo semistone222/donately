@@ -17,4 +17,6 @@
     <color name="medium_grey">#9E9E9E</color>
     <color name="button_grey">#757575</color>
     <color name="heart">#d34836</color>
+    <color name="grey_progress_bar">#E6E7E8</color>
+    <color name="green_progress_bar">#2BDE73</color>
 </resources>

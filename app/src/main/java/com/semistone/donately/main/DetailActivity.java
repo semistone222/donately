@@ -23,16 +23,20 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.data.Content;
+import com.semistone.donately.data.History;
 import com.semistone.donately.utility.IntentUtils;
+import com.semistone.donately.utility.PointUtils;
 import com.semistone.donately.video.VideoActivity;
 
 import butterknife.BindColor;
@@ -40,6 +44,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -55,6 +61,10 @@ public class DetailActivity extends AppCompatActivity {
     protected TextView mTextViewItem;
     @BindView(R.id.image_view)
     protected ImageView mImageView;
+    @BindView(R.id.fund_progress_bar)
+    protected ProgressBar mFundProgressBar;
+    @BindView(R.id.progress_text_view)
+    protected TextView mProgressText;
     @BindColor(R.color.heart)
     protected int colorHeart;
     @BindColor(R.color.white)
@@ -63,6 +73,7 @@ public class DetailActivity extends AppCompatActivity {
     private Realm mRealm;
     private Content mContent;
     private Menu mMenu;
+    private int mCurrentPoint = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +92,26 @@ public class DetailActivity extends AppCompatActivity {
         mTextViewDetail.setText(mContent.getDescription());
         mTextViewItem.setText(mContent.getDescription2());
         Glide.with(this).load(mContent.getPictureUrl()).into(mImageView);
+        mFundProgressBar.setMax(mContent.getGoal());
+        final RealmResults<History> results = mRealm.where(History.class).equalTo(History.CONTENT_ID, mContent.getId()).findAll();
+        updateProgressUI(results);
+        results.addChangeListener(new RealmChangeListener<RealmResults<History>>() {
+            @Override
+            public void onChange(RealmResults<History> element) {
+                updateProgressUI(results);
+            }
+        });
+        // TEST
+        Log.e("abc", "onBindViewHolder: " + mCurrentPoint + " / " + mContent.getGoal());
+    }
+
+    private void updateProgressUI(RealmResults<History> results) {
+        mCurrentPoint = 0;
+        for (History history : results) {
+            mCurrentPoint += history.getPoint();
+        }
+        mFundProgressBar.setProgress(mCurrentPoint);
+        mProgressText.setText(PointUtils.getProgressPercent(mCurrentPoint, mContent.getGoal()));
     }
 
     @OnClick(R.id.action_button)
@@ -122,14 +153,14 @@ public class DetailActivity extends AppCompatActivity {
             }
             return true;
         } else if (id == R.id.action_link) {
-            IntentUtils.openWebpage(this, mContent.getLinkUrl());
+            IntentUtils.openWebPage(this, mContent.getLinkUrl());
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void updateFavoriteMenuItem(boolean isFavorite) {
-        int iconColor = isFavorite? colorHeart : colorWhite;
+        int iconColor = isFavorite ? colorHeart : colorWhite;
         MenuItem targetItem = mMenu.findItem(R.id.action_favorite);
         targetItem.getIcon().setColorFilter(iconColor, PorterDuff.Mode.SRC_ATOP);
     }

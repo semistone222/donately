@@ -3,7 +3,7 @@ package com.semistone.donately;
 import android.app.Application;
 import android.util.Log;
 
-import com.semistone.donately.data.VideoAd;
+import com.semistone.donately.data.Advertisement;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -19,39 +19,39 @@ public class MyApplication extends Application {
         super.onCreate();
         Realm.init(this);
 
-        // TEST
+        // TEST 로그아웃 할때 다 없어지는 점 고려하자. 서버를 안 쓸거면...
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<VideoAd> results = realm.where(VideoAd.class).findAll();
+        RealmResults<Advertisement> results = realm.where(Advertisement.class).findAll();
         Log.e("bbbb", "onCreate: " + results.toString());
         if (results == null || results.isEmpty()) {
             Log.e("cccc", "onCreate: ");
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    VideoAd videoAd = realm.createObject(VideoAd.class, VideoAd.getNextKey(realm));
-                    videoAd.setLength(15);
-                    videoAd.setFileUrl("android.resource://" + getPackageName() + "/" + R.raw.ad_15);
-                    videoAd.setPromotionUrl("http://www.naver.com");
+                    Advertisement advertisement = realm.createObject(Advertisement.class, Advertisement.getNextKey(realm));
+                    advertisement.setLength(15);
+                    advertisement.setFileUrl("android.resource://" + getPackageName() + "/" + R.raw.ad_15);
+                    advertisement.setPromotionUrl("http://www.naver.com");
                 }
             });
 
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    VideoAd videoAd = realm.createObject(VideoAd.class, VideoAd.getNextKey(realm));
-                    videoAd.setLength(30);
-                    videoAd.setFileUrl("android.resource://" + getPackageName() + "/" + R.raw.ad_30);
-                    videoAd.setPromotionUrl("https://www.google.com");
+                    Advertisement advertisement = realm.createObject(Advertisement.class, Advertisement.getNextKey(realm));
+                    advertisement.setLength(30);
+                    advertisement.setFileUrl("android.resource://" + getPackageName() + "/" + R.raw.ad_30);
+                    advertisement.setPromotionUrl("https://www.google.com");
                 }
             });
 
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    VideoAd videoAd = realm.createObject(VideoAd.class, VideoAd.getNextKey(realm));
-                    videoAd.setLength(60);
-                    videoAd.setFileUrl("android.resource://" + getPackageName() + "/" + R.raw.ad_60);
-                    videoAd.setPromotionUrl("https://slack.com/");
+                    Advertisement advertisement = realm.createObject(Advertisement.class, Advertisement.getNextKey(realm));
+                    advertisement.setLength(60);
+                    advertisement.setFileUrl("android.resource://" + getPackageName() + "/" + R.raw.ad_60);
+                    advertisement.setPromotionUrl("https://slack.com/");
                 }
             });
 

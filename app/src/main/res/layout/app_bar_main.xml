@@ -17,16 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-            <TextView
-                android:id="@+id/tv_donate_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:paddingRight="@dimen/text_padding"
-                tools:text="25" />
-        </android.support.v7.widget.Toolbar>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -47,8 +38,8 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
         android:tint="@color/white"
-        app:srcCompat="@drawable/ic_favorite"
-        android:layout_gravity="right|bottom"/>
+        app:srcCompat="@drawable/ic_favorite" />
 
 </android.support.design.widget.CoordinatorLayout>

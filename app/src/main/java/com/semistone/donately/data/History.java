@@ -10,15 +10,18 @@ import io.realm.annotations.PrimaryKey;
 
 public class History extends RealmObject {
     public static final String ID = "id";
+    public static final String USER_ID = "userId";
+    public static final String CONTENT_ID = "contentId";
     public static final String DONATE_DATE = "donateDate";
 
     @PrimaryKey
     private int id;
     private String userId;
     private int contentId;
+    private int advertisementId;
     private long donateDate;
-    private int adLength;
     private boolean isClicked;
+    private int point;
 
     public static int getNextKey(Realm realm) {
 
@@ -65,19 +68,27 @@ public class History extends RealmObject {
         this.donateDate = donateDate;
     }
 
-    public int getAdLength() {
-        return adLength;
-    }
-
-    public void setAdLength(int adLength) {
-        this.adLength = adLength;
-    }
-
     public boolean isClicked() {
         return isClicked;
     }
 
     public void setClicked(boolean clicked) {
         isClicked = clicked;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    public int getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(int advertisementId) {
+        this.advertisementId = advertisementId;
     }
 }

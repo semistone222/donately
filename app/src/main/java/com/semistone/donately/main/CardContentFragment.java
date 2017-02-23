@@ -2,6 +2,7 @@ package com.semistone.donately.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,20 +17,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.data.Content;
+import com.semistone.donately.data.History;
 import com.semistone.donately.utility.IntentUtils;
+import com.semistone.donately.utility.PointUtils;
 import com.semistone.donately.video.VideoActivity;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
 
 /**
  * Created by semistone on 2017-02-20.
@@ -90,6 +98,24 @@ public class CardContentFragment extends Fragment {
             Glide.with(mContext).load(content.getPictureUrl()).into(holder.image);
             holder.title.setText(content.getTitle());
             holder.description.setText(content.getDescription());
+            /// 이거 바뀌는거 즉각 반영 안됨.
+            Realm realm = Realm.getDefaultInstance();
+            final RealmResults<History> results = realm.where(History.class).equalTo(History.CONTENT_ID, content.getId()).findAll();
+            int currentPoint = 0;
+            for (History history : results) {
+                currentPoint += history.getPoint();
+            }
+            results.addChangeListener(new RealmChangeListener<RealmResults<History>>() {
+                @Override
+                public void onChange(RealmResults<History> element) {
+                    Log.e("abc", "onChange: " );
+                }
+            });
+            realm.close();
+            ///
+            holder.fundProgressBar.setProgress(currentPoint);
+            holder.fundProgressBar.setMax(content.getGoal());
+            holder.progressText.setText(PointUtils.getProgressPercent(currentPoint, content.getGoal()));
             holder.updateFavoriteImageButton(content.isFavorite());
         }
     }
@@ -107,6 +133,10 @@ public class CardContentFragment extends Fragment {
         protected ImageButton favoriteImageButton;
         @BindView(R.id.link_button)
         protected ImageButton linkImageButton;
+        @BindView(R.id.fund_progress_bar)
+        protected ProgressBar fundProgressBar;
+        @BindView(R.id.progress_text_view)
+        protected TextView progressText;
         @BindColor(R.color.heart)
         protected int colorHeart;
         @BindColor(R.color.button_grey)
@@ -162,7 +192,7 @@ public class CardContentFragment extends Fragment {
             linkImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtils.openWebpage(itemView.getContext(), data.getLinkUrl());
+                    IntentUtils.openWebPage(itemView.getContext(), data.getLinkUrl());
                 }
             });
         }

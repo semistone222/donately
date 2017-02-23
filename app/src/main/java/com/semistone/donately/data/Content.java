@@ -17,17 +17,16 @@ public class Content extends RealmObject {
     public static final String TYPE_ORG = "type-org";
     public static final String TYPE_PEOPLE = "type-people";
 
-    // TODO: 2017-02-22 프로그레스바, 퍼센트, 목표 금액....!?
-
     @PrimaryKey
-    int id;
-    String title;
-    String description;
-    String description2;
-    String pictureUrl;
-    String linkUrl;
-    String type;
-    boolean isFavorite;
+    private int id;
+    private String title;
+    private String description;
+    private String description2;
+    private String pictureUrl;
+    private String linkUrl;
+    private String type;
+    private boolean isFavorite;
+    private int goal;
 
     public static int getNextKey(Realm realm) {
 
@@ -96,6 +95,14 @@ public class Content extends RealmObject {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getGoal() {
+        return goal;
+    }
+
+    public void setGoal(int goal) {
+        this.goal = goal;
     }
 
     public boolean isFavorite() {

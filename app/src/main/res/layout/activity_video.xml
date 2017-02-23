@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:maxHeight="5dp"
         android:minHeight="5dp"
-        android:progressDrawable="@drawable/progress_bar" />
+        android:progressDrawable="@drawable/video_progress_bar" />
 
     <TextView
         android:layout_width="match_parent"

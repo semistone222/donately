@@ -21,18 +21,6 @@ public class User extends RealmObject {
     private String type;
     private String photoUrl;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", accessToken='" + accessToken + '\'' +
-                ", type='" + type + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
-                '}';
-    }
-
     public String getId() {
         return id;
     }

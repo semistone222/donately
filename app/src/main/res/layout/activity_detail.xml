@@ -86,14 +86,42 @@
                 android:layout_height="wrap_content"
                 tools:text="@string/detail_desc2" />
 
-            <Button
-                android:id="@+id/action_button"
-                style="?android:attr/borderlessButtonStyle"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="@string/button_donate"
-                android:textColor="?attr/colorPrimary" />
+                android:layout_marginBottom="@dimen/md_keylines"
+                android:layout_marginTop="@dimen/md_keylines">
+
+                <ProgressBar
+                    android:id="@+id/fund_progress_bar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:maxHeight="5dp"
+                    android:minHeight="5dp"
+                    android:progressDrawable="@drawable/fund_progress_bar"
+                    tools:progress="50" />
+
+                <TextView
+                    android:id="@+id/progress_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/action_button"
+                    android:layout_marginRight="@dimen/md_keylines"
+                    android:layout_toStartOf="@+id/action_button"
+                    tools:text="23%" />
+
+                <Button
+                    android:id="@+id/action_button"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/fund_progress_bar"
+                    android:text="@string/button_donate"
+                    android:textColor="?attr/colorPrimary" />
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

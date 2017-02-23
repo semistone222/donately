@@ -50,7 +50,7 @@ public class HistoryAdapter extends RealmRecyclerViewAdapter<History, HistoryAda
         long donateDate = history.getDonateDate();
         String donateDateStr = (new SimpleDateFormat(DATE_FORMAT, Locale.US)).format(donateDate);
         holder.tvDonateDate.setText(donateDateStr);
-        holder.tvAdLength.setText(String.valueOf(history.getAdLength()));
+        holder.tvPoint.setText(String.valueOf(history.getPoint()));
         holder.itemView.setTag(history.getId());
     }
 
@@ -64,8 +64,8 @@ public class HistoryAdapter extends RealmRecyclerViewAdapter<History, HistoryAda
         @BindView(R.id.tv_donate_date)
         protected TextView tvDonateDate;
 
-        @BindView(R.id.tv_ad_length)
-        protected TextView tvAdLength;
+        @BindView(R.id.tv_point)
+        protected TextView tvPoint;
 
         public History data;
 

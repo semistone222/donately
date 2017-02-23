@@ -64,7 +64,6 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
-
     @OnClick(R.id.fab)
     void onClickFab(View view) {
         Snackbar.make(view, R.string.message_history, Snackbar.LENGTH_LONG).show();

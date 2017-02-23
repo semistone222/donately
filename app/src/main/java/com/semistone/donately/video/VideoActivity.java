@@ -15,8 +15,9 @@ import android.widget.VideoView;
 import com.semistone.donately.R;
 import com.semistone.donately.data.History;
 import com.semistone.donately.data.User;
-import com.semistone.donately.data.VideoAd;
+import com.semistone.donately.data.Advertisement;
 import com.semistone.donately.utility.IntentUtils;
+import com.semistone.donately.utility.PointUtils;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -38,7 +39,8 @@ public class VideoActivity extends AppCompatActivity {
     private int mPausePosition;
     private Realm mRealm;
     private History mHistory;
-    private VideoAd mVideoAd;
+    private Advertisement mAdvertisement;
+    private int mAdLength;
 
     private Runnable syncVideoProgress = new Runnable() {
         @Override
@@ -66,11 +68,10 @@ public class VideoActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String adLengthStr = sharedPreferences.getString(mAdLengthKey, getString(R.string.pref_advertisement_length_15));
-        int adLength = Integer.valueOf(adLengthStr);
-        mVideoAd = mRealm.where(VideoAd.class).equalTo(VideoAd.LENGTH, adLength).findFirst();
-        mHistory.setAdLength(adLength);
+        mAdLength = Integer.valueOf(adLengthStr);
+        mAdvertisement = mRealm.where(Advertisement.class).equalTo(Advertisement.LENGTH, mAdLength).findFirst();
 
-        mVideoView.setVideoURI(Uri.parse(mVideoAd.getFileUrl()));
+        mVideoView.setVideoURI(Uri.parse(mAdvertisement.getFileUrl()));
         mVideoView.requestFocus();
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -91,7 +92,7 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (!mHistory.isClicked()) {
-                    IntentUtils.openWebpage(v.getContext(), mVideoAd.getPromotionUrl());
+                    IntentUtils.openWebPage(v.getContext(), mAdvertisement.getPromotionUrl());
                     doTasksAfterAdsEnded();
                     mHistory.setClicked(true);
                 }
@@ -135,8 +136,9 @@ public class VideoActivity extends AppCompatActivity {
                 History history = realm.createObject(History.class, History.getNextKey(mRealm));
                 history.setUserId(user.getId());
                 history.setContentId(mHistory.getContentId());
+                history.setAdvertisementId(mAdvertisement.getId());
                 history.setDonateDate(System.currentTimeMillis());
-                history.setAdLength(mHistory.getAdLength());
+                history.setPoint(PointUtils.calculate(mAdLength, mHistory.isClicked()));
                 history.setClicked(mHistory.isClicked());
             }
         });

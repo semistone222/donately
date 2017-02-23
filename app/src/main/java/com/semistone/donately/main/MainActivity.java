@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.nav_view)
     protected NavigationView mNavigationView;
 
-    @BindView(R.id.tv_donate_point)
-    protected TextView mTvDonatePoint;
-
     private Realm mRealm;
 
     @Override
@@ -107,8 +104,6 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(new FavoriteTileContentFragment(), "Favorite");
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
-
-        setupPointView();
     }
 
     @Override
@@ -169,25 +164,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void setupPointView() {
-        final RealmResults<History> results = mRealm.where(History.class).findAll();
-        mTvDonatePoint.setText(String.valueOf(getPoint(results)));
-        results.addChangeListener(new RealmChangeListener<RealmResults<History>>() {
-            @Override
-            public void onChange(RealmResults<History> element) {
-                mTvDonatePoint.setText(String.valueOf(getPoint(results)));
-            }
-        });
-    }
-
-    private int getPoint(RealmResults<History> results) {
-        int ret = 0;
-        for (History history : results) {
-            ret += history.getAdLength();
-        }
-        return ret;
-    }
-
     // TEST
     @OnClick(R.id.fab)
     protected void onClickFab(View view) {
@@ -207,6 +183,7 @@ public class MainActivity extends AppCompatActivity
                 content.setLinkUrl(getString(R.string.show_case_web_site));
                 content.setType(getRandomType());
                 content.setFavorite(getRandomBoolean());
+                content.setGoal(getRandomInt(100) + 1);
             }
         });
     }
@@ -223,5 +200,9 @@ public class MainActivity extends AppCompatActivity
     // TEST
     public static boolean getRandomBoolean() {
         return Math.random() < 0.5;
+    }
+
+    public static int getRandomInt(int max) {
+        return (int) (Math.random() * max);
     }
 }

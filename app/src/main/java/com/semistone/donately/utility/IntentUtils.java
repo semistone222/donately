@@ -10,7 +10,7 @@ import android.net.Uri;
 
 public class IntentUtils {
 
-    public static void openWebpage(Context context, String url) {
+    public static void openWebPage(Context context, String url) {
         Uri webPage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webPage);
         if (intent.resolveActivity(context.getPackageManager()) != null) {

@@ -5,9 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
-import com.semistone.donately.R;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
+import com.semistone.donately.R;
 
 public class IntroActivity extends AppIntro {
     @Override

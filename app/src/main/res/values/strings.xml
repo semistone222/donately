@@ -35,11 +35,17 @@
     <string name="message_history">These are records you donated.</string>
     <string name="message_login_canceled">login canceled.</string>
     <string name="message_login_error">login error.</string>
+    <string name="message_login_error_server">server not working.</string>
     <string name="message_logout_success">logged out.</string>
     <string name="message_advertisement_start">Ads start showing</string>
     <string name="message_video_explanation">Donations are made to this advertisement.</string>
     <string name="message_card_view_encourage">Tap heart to donate :)</string>
     <string name="message_history_empty">No history yet, Try to donate!</string>
+    <string name="message_add_favorite">Added to Favorite.</string>
+    <string name="message_video_error">Failed to load ads.</string>
+    <string name="message_empty">Not yet. Visit later again, plz.</string>
+    <string name="message_thank_title">Thank you!</string>
+    <string name="message_thank_detail">You just donated %1$dP, Thanks for your help.</string>
     <string name="pref_advertisement_length_key" translatable="false">advertisement-length</string>
     <string name="pref_advertisement_length_title">Advertisement length</string>
     <string name="pref_advertisement_length_15">15</string>
@@ -72,6 +78,7 @@
     <string name="video_current_playing_time_key" translatable="false">video-current-playing-time</string>
     <string name="show_case_web_site" translatable="false">https://semistone222.github.io/donately/</string>
     <string name="tell_a_friend">Tell a Friend</string>
+    <string name="point_key" translatable="false">point-key</string>
     <string name="beneficiary_key" translatable="false">beneficiary-key</string>
     <string-array name="open_source_list">
         <item>Android Open Source Project</item>
@@ -82,7 +89,9 @@
         <item>Realm</item>
         <item>Google APIs for Mobile</item>
         <item>paolorotolo AppIntro</item>
-        <item>hanks.xyz smallbang</item>
+        <item>Retrofit</item>
+        <item>lovelydialog</item>
+        <item>AndroidVideoCache</item>
     </string-array>
     <string name="button_donate">Donate</string>
     <string name="item_title">Palais Garnier</string>
@@ -97,34 +106,6 @@
         pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
         deserunt mollit anim id est laborum.
     </string>
-    <string name="title_desc2">Description2</string>
+    <string name="title_desc2">Item</string>
     <string name="detail_desc2">"8 Rue Scribe, 75009 Paris, France"</string>
-
-    <!-- TEST -->
-    <string name="fragment_poverty_title">GIVE FOOD TO HUNGER</string>
-    <string name="fragment_poverty_description">Every day too many men and women across the globe
-        struggle to feed their children a nutritious meal. Although we produce enough food to feed
-        everyone, a lots of people dies from malnutrition.
-    </string>
-    <string name="fragment_poverty_beneficiary">World Food Programme</string>
-
-    <string name="fragment_refugee_title">HELP REFUGEES</string>
-    <string name="fragment_refugee_description">You can provide critical emergency assistance in the
-        form of clean water, sanitation and health care, as well as shelter, blankets, household
-        goods and sometimes food.
-    </string>
-    <string name="fragment_refugee_beneficiary">UN Refugee Agency</string>
-
-    <string name="fragment_animal_title">SAVE ANIMALS</string>
-    <string name="fragment_animal_description">There is a lot of abandoned or mistreated animals.
-        They need your help.
-    </string>
-    <string name="fragment_animal_beneficiary">World Animal Protection International</string>
-
-    <string name="fragment_environment_title">PROTECT ENVIRONMENT</string>
-    <string name="fragment_environment_description">Defending our oceans, protecting the world\'s
-        ancient forests, creating a toxic free future and campaigning for sustainable agriculture.
-    </string>
-    <string name="fragment_environment_beneficiary">Green Peace</string>
-
 </resources>

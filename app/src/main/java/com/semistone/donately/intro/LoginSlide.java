@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.semistone.donately.R;
 import com.semistone.donately.data.User;
 import com.semistone.donately.main.MainActivity;
+import com.semistone.donately.network.NetworkManager;
 
 import org.json.JSONObject;
 
@@ -33,6 +35,9 @@ import java.util.Arrays;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by semistone on 2017-02-14.
@@ -73,7 +78,7 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(mLayoutResId, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -91,7 +96,7 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
                                 new GraphRequest.GraphJSONObjectCallback() {
                                     @Override
                                     public void onCompleted(JSONObject object,
-                                            GraphResponse response) {
+                                                            GraphResponse response) {
 
                                         String id = object.optString("id");
                                         String name = object.optString("name");
@@ -105,18 +110,8 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
                                         stringBuilder.append("/picture?type=large");
                                         String photoUrl = stringBuilder.toString();
 
-                                        mRealm.beginTransaction();
-                                        User user = mRealm.createObject(User.class, id);
-                                        user.setName(name);
-                                        user.setEmail(email);
-                                        user.setAccessToken(accessToken);
-                                        user.setType(type);
-                                        user.setPhotoUrl(photoUrl);
-                                        mRealm.commitTransaction();
-
-                                        startActivity(
-                                                new Intent(getActivity(), MainActivity.class));
-                                        getActivity().finish();
+                                        User user = User.newInstance(id, name, email, accessToken, type, photoUrl);
+                                        insertUserServerAndLocalAndGoToMain(user);
                                     }
                                 });
 
@@ -177,6 +172,44 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
 
     }
 
+    private void insertUserServerAndLocalAndGoToMain(final User user) {
+        Call<User> insertUser = NetworkManager.service.insertUser(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getAccessToken(),
+                user.getType(),
+                user.getPhotoUrl());
+        insertUser.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    Log.e("semistone", "onResponse: ");
+
+                    mRealm.beginTransaction();
+                    User newUser = mRealm.createObject(User.class, user.getId());
+                    newUser.setName(user.getName());
+                    newUser.setEmail(user.getEmail());
+                    newUser.setAccessToken(user.getAccessToken());
+                    newUser.setType(user.getType());
+                    newUser.setPhotoUrl(user.getPhotoUrl());
+                    mRealm.commitTransaction();
+
+                    startActivity(
+                            new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("semistone", "onFailure: ");
+                Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                        R.string.message_login_error_server, Snackbar.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
@@ -221,17 +254,8 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
                 photoUrl = null;
             }
 
-            mRealm.beginTransaction();
-            User user = mRealm.createObject(User.class, id);
-            user.setName(name);
-            user.setEmail(email);
-            user.setAccessToken(accessToken);
-            user.setType(type);
-            user.setPhotoUrl(photoUrl);
-            mRealm.commitTransaction();
-
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();
+            User user = User.newInstance(id, name, email, accessToken, type, photoUrl);
+            insertUserServerAndLocalAndGoToMain(user);
         } else {
             Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
                     R.string.message_login_error, Snackbar.LENGTH_SHORT).show();

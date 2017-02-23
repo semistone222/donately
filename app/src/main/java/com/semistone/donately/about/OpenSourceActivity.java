@@ -1,14 +1,13 @@
 package com.semistone.donately.about;
 
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.common.primitives.Chars;
 import com.semistone.donately.R;
 
 import butterknife.BindView;

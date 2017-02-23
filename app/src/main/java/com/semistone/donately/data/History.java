@@ -1,20 +1,11 @@
 package com.semistone.donately.data;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by semistone on 2017-02-08.
  */
 
-public class History extends RealmObject {
-    public static final String ID = "id";
-    public static final String USER_ID = "userId";
-    public static final String CONTENT_ID = "contentId";
-    public static final String DONATE_DATE = "donateDate";
+public class History {
 
-    @PrimaryKey
     private int id;
     private String userId;
     private int contentId;
@@ -22,18 +13,27 @@ public class History extends RealmObject {
     private long donateDate;
     private boolean isClicked;
     private int point;
+    private String title;
 
-    public static int getNextKey(Realm realm) {
+    @Override
+    public String toString() {
+        return "History{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", contentId=" + contentId +
+                ", advertisementId=" + advertisementId +
+                ", donateDate=" + donateDate +
+                ", isClicked=" + isClicked +
+                ", point=" + point +
+                '}';
+    }
 
-        int id;
+    public String getTitle() {
+        return title;
+    }
 
-        try {
-            id = realm.where(History.class).max(History.ID).intValue() + 1;
-        } catch (Exception e) {
-            id = 0;
-        }
-
-        return id;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getId() {

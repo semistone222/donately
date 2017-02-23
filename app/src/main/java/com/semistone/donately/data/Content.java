@@ -1,23 +1,11 @@
 package com.semistone.donately.data;
 
-import android.util.Log;
-
-import io.realm.Realm;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by semistone on 2017-02-21.
  */
 
-public class Content extends RealmObject {
-    public static final String ID = "id";
-    public static final String TYPE = "type";
-    public static final String FAVORITE = "isFavorite";
-    public static final String TYPE_ORG = "type-org";
-    public static final String TYPE_PEOPLE = "type-people";
+public class Content {
 
-    @PrimaryKey
     private int id;
     private String title;
     private String description;
@@ -27,18 +15,22 @@ public class Content extends RealmObject {
     private String type;
     private boolean isFavorite;
     private int goal;
+    private int currentPoint;
 
-    public static int getNextKey(Realm realm) {
-
-        int id;
-
-        try {
-            id = realm.where(Content.class).max(Content.ID).intValue() + 1;
-        } catch (Exception e) {
-            id = 0;
-        }
-
-        return id;
+    @Override
+    public String toString() {
+        return "Content{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", description2='" + description2 + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", linkUrl='" + linkUrl + '\'' +
+                ", type='" + type + '\'' +
+                ", isFavorite=" + isFavorite +
+                ", goal=" + goal +
+                ", currentPoint=" + currentPoint +
+                '}';
     }
 
     public int getId() {
@@ -111,5 +103,13 @@ public class Content extends RealmObject {
 
     public void setFavorite(boolean favorite) {
         isFavorite = favorite;
+    }
+
+    public int getCurrentPoint() {
+        return currentPoint;
+    }
+
+    public void setCurrentPoint(int currentPoint) {
+        this.currentPoint = currentPoint;
     }
 }

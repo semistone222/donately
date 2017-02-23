@@ -1,11 +1,5 @@
 package com.semistone.donately.utility;
 
-import com.semistone.donately.data.History;
-
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
-
 /**
  * Created by semistone on 2017-02-22.
  */
@@ -24,5 +18,9 @@ public class PointUtils {
         float minority = (float) current / (float) goal;
         int percent = (int) (minority * 100);
         return percent + "%";
+    }
+
+    public static String getProgressPercent2(int current, int goal) {
+        return current + " / " + goal;
     }
 }

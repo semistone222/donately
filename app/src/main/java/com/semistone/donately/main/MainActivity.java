@@ -2,63 +2,49 @@ package com.semistone.donately.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.about.AboutActivity;
-import com.semistone.donately.data.Content;
-import com.semistone.donately.data.History;
 import com.semistone.donately.data.User;
 import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import xyz.hanks.library.SmallBang;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private final static int REQUEST_EXIT = 1342;
-
-    @BindString(R.string.app_name)
-    protected String mAppName;
+    public final static int REQUEST_DONATE = 7542;
 
     @BindView(R.id.toolbar)
     protected Toolbar mToolbar;
-
     @BindView(R.id.drawer_layout)
     protected DrawerLayout mDrawer;
-
     @BindView(R.id.tab_layout)
     protected TabLayout mTabLayout;
-
     @BindView(R.id.view_pager)
     protected ViewPager mViewPager;
-
     @BindView(R.id.nav_view)
     protected NavigationView mNavigationView;
-
     private Realm mRealm;
 
     @Override
@@ -99,9 +85,9 @@ public class MainActivity extends AppCompatActivity
                 .into((ImageView) mNavHeader.findViewById(R.id.iv_user_image));
 
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
-        adapter.addFragment(CardContentFragment.newInstance(Content.TYPE_ORG), "Organization");
-        adapter.addFragment(CardContentFragment.newInstance(Content.TYPE_PEOPLE), "People");
-        adapter.addFragment(new FavoriteTileContentFragment(), "Favorite");
+        adapter.addFragment(new OrgFragment(), OrgFragment.NAME);
+        adapter.addFragment(new PeopleFragment(), PeopleFragment.NAME);
+        adapter.addFragment(new FavoriteFragment(), FavoriteFragment.NAME);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
@@ -159,50 +145,18 @@ public class MainActivity extends AppCompatActivity
                     finish();
                 }
                 break;
+            case REQUEST_DONATE:
+                if (resultCode == RESULT_OK) {
+                    int point = data.getIntExtra(getString(R.string.point_key), 15);
+                    new LovelyInfoDialog(this)
+                            .setTopColorRes(R.color.colorPrimary)
+                            .setIcon(R.drawable.ic_coin)
+                            .setTitle(R.string.message_thank_title)
+                            .setMessage(String.format(getString(R.string.message_thank_detail), point))
+                            .show();
+                }
             default:
                 break;
         }
-    }
-
-    // TEST
-    @OnClick(R.id.fab)
-    protected void onClickFab(View view) {
-        mRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Content content = realm.createObject(Content.class, Content.getNextKey(mRealm));
-                content.setTitle(getString(R.string.item_title));
-                content.setDescription(getString(R.string.detail_desc));
-                content.setDescription2(getString(R.string.detail_desc2));
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("android.resource://");
-                stringBuilder.append(getPackageName());
-                stringBuilder.append("/");
-                stringBuilder.append(R.drawable.a);
-                content.setPictureUrl(stringBuilder.toString());
-                content.setLinkUrl(getString(R.string.show_case_web_site));
-                content.setType(getRandomType());
-                content.setFavorite(getRandomBoolean());
-                content.setGoal(getRandomInt(100) + 1);
-            }
-        });
-    }
-
-    // TEST
-    public static String getRandomType() {
-        if (getRandomBoolean()) {
-            return Content.TYPE_ORG;
-        } else {
-            return Content.TYPE_PEOPLE;
-        }
-    }
-
-    // TEST
-    public static boolean getRandomBoolean() {
-        return Math.random() < 0.5;
-    }
-
-    public static int getRandomInt(int max) {
-        return (int) (Math.random() * max);
     }
 }

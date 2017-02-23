@@ -60,45 +60,63 @@
             android:progressDrawable="@drawable/fund_progress_bar"
             tools:progress="50" />
 
-        <Button
-            android:id="@+id/action_button"
-            style="?android:attr/borderlessButtonStyle"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/fund_progress_bar"
-            android:text="@string/button_donate"
-            android:textColor="?attr/colorPrimary" />
+            android:layout_below="@id/fund_progress_bar">
 
-        <ImageButton
-            android:id="@+id/link_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/cards_button_width"
-            android:layout_height="@dimen/cards_button_height"
-            android:layout_below="@+id/fund_progress_bar"
-            android:layout_marginLeft="@dimen/md_keylines"
-            android:layout_toRightOf="@+id/favorite_button"
-            android:tint="@color/button_grey"
-            app:srcCompat="@drawable/ic_insert_link" />
+            <Button
+                android:id="@+id/action_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/button_donate"
+                android:textColor="?attr/colorPrimary" />
 
-        <ImageButton
-            android:id="@+id/favorite_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="@dimen/cards_button_width"
-            android:layout_height="@dimen/cards_button_height"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/fund_progress_bar"
-            android:layout_marginLeft="@dimen/md_keylines"
-            android:tint="@color/button_grey"
-            app:srcCompat="@drawable/ic_favorite" />
+            <ImageButton
+                android:id="@+id/link_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/cards_button_width"
+                android:layout_height="@dimen/cards_button_height"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/md_keylines"
+                android:layout_toRightOf="@+id/favorite_button"
+                android:tint="@color/button_grey"
+                app:srcCompat="@drawable/ic_insert_link" />
 
-        <TextView
-            android:id="@+id/progress_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/action_button"
-            android:layout_marginRight="@dimen/md_keylines"
-            android:layout_toStartOf="@+id/action_button"
-            tools:text="23%" />
+            <ToggleButton
+                android:id="@+id/favorite_button"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/md_keylines"
+                android:background="@drawable/favorite_icon_selector"
+                android:textOff=""
+                android:textOn="" />
+
+            <TextView
+                android:id="@+id/progress_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/action_button"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/md_keylines"
+                android:layout_toStartOf="@+id/action_button"
+                tools:text="23%" />
+
+            <TextView
+                android:id="@+id/progress_text_view2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/action_button"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/md_keylines"
+                android:layout_toStartOf="@+id/progress_text_view"
+                tools:text="15 / 1000" />
+        </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

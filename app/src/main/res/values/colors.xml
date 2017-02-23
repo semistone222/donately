@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryLight">#FFE082</color>
-    <color name="colorPrimaryDark">#FFA000</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryLight">#80CBC4</color>
+    <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#292929</color>
     <color name="colorVideoBackground">#1e1e1e</color>
     <color name="colorProgressBackground">#3b3b3b</color>

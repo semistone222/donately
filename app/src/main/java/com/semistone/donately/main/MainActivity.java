@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_donate) {
 
+        } else if (id == R.id.nav_favorite) {
             startActivity(new Intent(MainActivity.this, FavoriteActivity.class));
         } else if (id == R.id.nav_history) {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));

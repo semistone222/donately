@@ -18,7 +18,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.semistone.donately.R;
 import com.semistone.donately.about.AboutActivity;
+import com.semistone.donately.data.Favorite;
 import com.semistone.donately.data.User;
+import com.semistone.donately.favorite.FavoriteActivity;
 import com.semistone.donately.history.HistoryActivity;
 import com.semistone.donately.intro.IntroActivity;
 import com.semistone.donately.settings.SettingsActivity;
@@ -87,7 +89,6 @@ public class MainActivity extends AppCompatActivity
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
         adapter.addFragment(new OrgFragment(), OrgFragment.NAME);
         adapter.addFragment(new PeopleFragment(), PeopleFragment.NAME);
-        adapter.addFragment(new FavoriteFragment(), FavoriteFragment.NAME);
         mViewPager.setAdapter(adapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_donate) {
 
+            startActivity(new Intent(MainActivity.this, FavoriteActivity.class));
         } else if (id == R.id.nav_history) {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));
         } else if (id == R.id.nav_settings) {

@@ -1,4 +1,4 @@
-package com.semistone.donately.main;
+package com.semistone.donately.favorite;
 
 import android.content.Context;
 import android.content.Intent;

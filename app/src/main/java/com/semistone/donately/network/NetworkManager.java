@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkManager {
 
-    private static final String baseUrl = "http://192.168.1.26:52273";
+    private static final String baseUrl = "http://192.168.1.3:52273";
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(baseUrl)

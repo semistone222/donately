@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/nav_donate_title" />
         <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/nav_favorite_title" />
+        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_menu_recent_history"
             android:title="@string/nav_history_title" />

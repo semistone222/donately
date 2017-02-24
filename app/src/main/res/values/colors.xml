@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryLight">#FFE082</color>
-    <color name="colorPrimaryDark">#FFA000</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryLight">#80CBC4</color>
+    <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#292929</color>
+    <color name="colorVideoBackground">#1e1e1e</color>
+    <color name="colorProgressBackground">#3b3b3b</color>
+    <color name="colorBackground">#292929</color>
     <color name="colorDivider">#ededed</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#BDBDBD</color>
     <color name="facebook">#3b5998</color>
     <color name="google">#d34836</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dark_grey">#424242</color>
+    <color name="medium_grey">#9E9E9E</color>
+    <color name="button_grey">#757575</color>
+    <color name="heart">#d34836</color>
+    <color name="grey_progress_bar">#E6E7E8</color>
+    <color name="green_progress_bar">#2BDE73</color>
 </resources>

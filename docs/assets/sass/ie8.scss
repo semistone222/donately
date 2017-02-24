@@ -4,38 +4,49 @@
 @import 'libs/skel';
 
 /*
-	Directive by HTML5 UP
+	Read Only by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-$color-border-ie: #cccccc;
-
 /* Basic */
 
-	hr {
-		border-top: solid 1px $color-border-ie;
+	code,
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	select,
+	textarea,
+	.box,
+	.image,
+	.image img,
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"],
+	.button {
+		position: relative;
+		-ms-behavior: url('assets/js/ie/PIE.htc');
 	}
 
-	blockquote {
-		border-left: solid 0.5em $color-border-ie;
+/* Form */
+
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	select {
+		line-height: _size(element-height);
 	}
 
-/* Section/Article */
+	input[type="checkbox"],
+	input[type="radio"] {
+		@include vendor('appearance', 'normal');
 
-	header {
-		&.major {
-			border-color: $color-border-ie;
+		& + label {
+			padding: 0 0 0 1.5em;
 
-			p {
-				border-top: solid 1px $color-border-ie;
+			&:before {
+				display: none;
 			}
-		}
-	}
-
-	footer {
-		&.major {
-			border-color: $color-border-ie;
 		}
 	}
 
@@ -45,91 +56,7 @@ $color-border-ie: #cccccc;
 	input[type="reset"],
 	input[type="button"],
 	.button {
-		position: relative;
-		-ms-behavior: url('assets/js/ie/PIE.htc');
-
 		&.alt {
-			border: solid 1px $color-border-ie;
+			border: solid _size(border-width) _palette(border2);
 		}
-	}
-
-/* Form */
-
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
-	select,
-	textarea {
-		position: relative;
-		border: solid 1px $color-border-ie;
-		-ms-behavior: url('assets/js/ie/PIE.htc');
-	}
-
-/* Image */
-
-	.image {
-		border: 0;
-		display: inline-block;
-		position: relative;
-
-		&:after {
-			display: none;
-		}
-	}
-
-/* Box */
-
-	.box {
-		border: solid 1px $color-border-ie;
-	}
-
-/* Header */
-
-	#header {
-		background-image: url('../../images/header.jpg') !important;
-		background-size: cover !important;
-		background-position: scroll !important;
-		-ms-behavior: url('assets/js/ie/backgroundsize.min.htc');
-		padding: 8em 0 !important;
-		color: _palette(accent2, fg-bold);
-
-		a {
-			color: inherit;
-		}
-
-		&:before {
-			content: '';
-			background-image: url('images/overlay.png');
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			display: block;
-			z-index: 0;
-		}
-
-		> * {
-			position: relative;
-			z-index: 1;
-		}
-
-		.logo {
-			-ms-behavior: url('assets/js/ie/PIE.htc');
-		}
-	}
-
-/* Footer */
-
-	#footer {
-		background-image: none !important;
-		margin-top: 0 !important;
-		padding: 4em 0 !important;
-		color: _palette(accent1, fg-bold);
-	}
-
-/* Main */
-
-	#main {
-		padding: 4em 0;
 	}

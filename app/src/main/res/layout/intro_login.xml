@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    android:gravity="center"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/facebook_login"
         style="@style/LoginButton"
-        android:text="@string/facebook_login"
-        android:background="@color/facebook"/>
+        android:background="@color/facebook"
+        android:text="@string/facebook_login"/>
 
     <TextView
         android:id="@+id/google_login"
         style="@style/LoginButton"
-        android:text="@string/google_login"
-        android:background="@color/google" />
+        android:background="@color/google"
+        android:text="@string/google_login"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/text_padding"
         android:text="@string/app_name"
-        android:textColor="@color/colorPrimaryDark"
-        android:padding="@dimen/text_padding"/>
+        android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>

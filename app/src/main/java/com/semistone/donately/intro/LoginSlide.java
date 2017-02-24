@@ -3,16 +3,16 @@ package com.semistone.donately.intro;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.semistone.donately.R;
 import com.semistone.donately.data.User;
 import com.semistone.donately.main.MainActivity;
+import com.semistone.donately.network.NetworkManager;
 
 import org.json.JSONObject;
 
@@ -34,6 +35,9 @@ import java.util.Arrays;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by semistone on 2017-02-14.
@@ -82,59 +86,58 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
 
     private void setUpFacebookLogin() {
         mCallbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(final LoginResult loginResult) {
-
-                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+        LoginManager.getInstance().registerCallback(mCallbackManager,
+                new FacebookCallback<LoginResult>() {
                     @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
+                    public void onSuccess(final LoginResult loginResult) {
 
-                        String id = object.optString("id");
-                        String name = object.optString("name");
-                        String email = object.optString("email");
-                        String accessToken = loginResult.getAccessToken().getToken();
-                        String type = "facebook";
-                        StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("https://graph.facebook.com/");
-                        stringBuilder.append(id);
-                        stringBuilder.append("/picture?type=large");
-                        String photoUrl = stringBuilder.toString();
+                        GraphRequest graphRequest = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object,
+                                                            GraphResponse response) {
 
-                        mRealm.beginTransaction();
-                        User user = mRealm.createObject(User.class, id);
-                        user.setName(name);
-                        user.setEmail(email);
-                        user.setAccessToken(accessToken);
-                        user.setType(type);
-                        user.setPhotoUrl(photoUrl);
-                        mRealm.commitTransaction();
+                                        String id = object.optString("id");
+                                        String name = object.optString("name");
+                                        String email = object.optString("email");
+                                        String accessToken =
+                                                loginResult.getAccessToken().getToken();
+                                        String type = "facebook";
+                                        StringBuilder stringBuilder = new StringBuilder();
+                                        stringBuilder.append("https://graph.facebook.com/");
+                                        stringBuilder.append(id);
+                                        stringBuilder.append("/picture?type=large");
+                                        String photoUrl = stringBuilder.toString();
 
-                        startActivity(new Intent(getActivity(), MainActivity.class));
-                        getActivity().finish();
+                                        User user = User.newInstance(id, name, email, accessToken, type, photoUrl);
+                                        insertUserServerAndLocalAndGoToMain(user);
+                                    }
+                                });
+
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email");
+                        graphRequest.setParameters(parameters);
+                        graphRequest.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                                R.string.message_login_canceled, Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                                R.string.message_login_error, Snackbar.LENGTH_SHORT).show();
                     }
                 });
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email");
-                graphRequest.setParameters(parameters);
-                graphRequest.executeAsync();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getActivity(), R.string.login_canceled, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void setUpGoogleLogin() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(
+                GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
@@ -169,6 +172,44 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
 
     }
 
+    private void insertUserServerAndLocalAndGoToMain(final User user) {
+        Call<User> insertUser = NetworkManager.service.insertUser(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getAccessToken(),
+                user.getType(),
+                user.getPhotoUrl());
+        insertUser.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    Log.e("semistone", "onResponse: ");
+
+                    mRealm.beginTransaction();
+                    User newUser = mRealm.createObject(User.class, user.getId());
+                    newUser.setName(user.getName());
+                    newUser.setEmail(user.getEmail());
+                    newUser.setAccessToken(user.getAccessToken());
+                    newUser.setType(user.getType());
+                    newUser.setPhotoUrl(user.getPhotoUrl());
+                    mRealm.commitTransaction();
+
+                    startActivity(
+                            new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("semistone", "onFailure: ");
+                Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                        R.string.message_login_error_server, Snackbar.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
@@ -182,7 +223,8 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
 
     @OnClick(R.id.facebook_login)
     void onClickFacebookLogin(View view) {
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
+        LoginManager.getInstance().logInWithReadPermissions(this,
+                Arrays.asList("public_profile", "email"));
     }
 
     @Override
@@ -205,21 +247,18 @@ public class LoginSlide extends Fragment implements GoogleApiClient.OnConnection
             String email = acct.getEmail();
             String accessToken = acct.getIdToken();
             String type = User.GOOGLE;
-            String photoUrl = acct.getPhotoUrl().toString();
+            String photoUrl;
+            if (acct.getPhotoUrl() != null) {
+                photoUrl = acct.getPhotoUrl().toString();
+            } else {
+                photoUrl = null;
+            }
 
-            mRealm.beginTransaction();
-            User user = mRealm.createObject(User.class, id);
-            user.setName(name);
-            user.setEmail(email);
-            user.setAccessToken(accessToken);
-            user.setType(type);
-            user.setPhotoUrl(photoUrl);
-            mRealm.commitTransaction();
-
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish();
+            User user = User.newInstance(id, name, email, accessToken, type, photoUrl);
+            insertUserServerAndLocalAndGoToMain(user);
         } else {
-            Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
+            Snackbar.make(getActivity().getWindow().getDecorView().getRootView(),
+                    R.string.message_login_error, Snackbar.LENGTH_SHORT).show();
         }
     }
 

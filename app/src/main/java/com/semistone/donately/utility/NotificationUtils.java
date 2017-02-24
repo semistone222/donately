@@ -27,8 +27,8 @@ public class NotificationUtils {
     public static void encourageDonation(Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setSmallIcon(R.drawable.ic_loving_24dp)
-                .setLargeIcon(largeIcon(context, R.drawable.ic_loving_24dp))
+                .setSmallIcon(R.drawable.ic_icon)
+                .setLargeIcon(largeIcon(context, R.drawable.ic_icon))
                 .setContentTitle(context.getString(R.string.encourage_donation_notification_title))
                 .setContentText(context.getString(R.string.encourage_donation_notification_body))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(

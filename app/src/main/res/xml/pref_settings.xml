@@ -4,19 +4,19 @@
         android:defaultValue="@bool/pref_notification_default"
         android:key="@string/pref_notification_key"
         android:summary="@string/pref_notification_summary"
-        android:title="@string/pref_notification_title" />
+        android:title="@string/pref_notification_title"/>
 
     <ListPreference
-        android:defaultValue="@string/pref_advertisement_length_30"
+        android:defaultValue="@string/pref_advertisement_length_15"
         android:entries="@array/pref_advertisement_length_list_titles"
         android:entryValues="@array/pref_advertisement_length_list_values"
         android:key="@string/pref_advertisement_length_key"
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
-        android:title="@string/pref_advertisement_length_title" />
+        android:title="@string/pref_advertisement_length_title"/>
 
     <Preference
-        android:title="@string/pref_logout_title"
-        android:key="@string/pref_logout_key"/>
+        android:key="@string/pref_logout_key"
+        android:title="@string/pref_logout_title"/>
 
 </PreferenceScreen>

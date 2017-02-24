@@ -11,54 +11,63 @@ import com.semistone.donately.R;
 import com.semistone.donately.data.History;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by semistone on 2017-02-09.
  */
 
-public class HistoryAdapter extends RealmRecyclerViewAdapter<History, HistoryAdapter.Holder> {
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Holder> {
 
-    private final static String DATE_FORMAT = "yy/MM/dd hh:mm";
+    private final Context mContext;
+    private final List<History> mHistoryList;
+    private final String DATE_FORMAT = "yyyy/MM/dd HH:mm";
 
-    public HistoryAdapter(Context context, OrderedRealmCollection<History> data) {
-        super(context, data, true);
+    public HistoryAdapter(Context context, List<History> historyList) {
+        mContext = context;
+        mHistoryList = historyList;
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_history, parent, false);
-        return new Holder(itemView);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View view = inflater.inflate(R.layout.row_history, parent, false);
+        return new Holder(view);
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        History history = getData().get(position);
+        History history = mHistoryList.get(position);
         holder.data = history;
-        holder.tvCount.setText(String.valueOf(getItemCount() - position));
-        holder.tvBeneficiary.setText(history.getBeneficiary());
+        holder.tvCount.setText("#" + String.valueOf(getItemCount() - position));
+        holder.tvDonateTarget.setText(String.valueOf(history.getTitle()));
         long donateDate = history.getDonateDate();
-        String donateDateStr = (new SimpleDateFormat(DATE_FORMAT, Locale.US)).format(donateDate);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        String donateDateStr = dateFormat.format((long) donateDate * 1000);
         holder.tvDonateDate.setText(donateDateStr);
-        holder.tvPoint.setText(String.valueOf(history.getPoint()));
-        holder.itemView.setTag(history.getHistoryId());
+        holder.tvPoint.setText(String.valueOf(history.getPoint()) + "P");
+        holder.itemView.setTag(history.getId());
+    }
+
+    @Override
+    public int getItemCount() {
+        if (mHistoryList == null) {
+            return 0;
+        } else {
+            return mHistoryList.size();
+        }
     }
 
     class Holder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_count)
         protected TextView tvCount;
-
-        @BindView(R.id.tv_beneficiary)
-        protected TextView tvBeneficiary;
-
+        @BindView(R.id.tv_donate_target)
+        protected TextView tvDonateTarget;
         @BindView(R.id.tv_donate_date)
         protected TextView tvDonateDate;
-
         @BindView(R.id.tv_point)
         protected TextView tvPoint;
 

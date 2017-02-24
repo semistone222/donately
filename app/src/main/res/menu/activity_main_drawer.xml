@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/nav_donate_title" />
         <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/ic_favorite"
+            android:title="@string/nav_favorite_title" />
+        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_menu_recent_history"
             android:title="@string/nav_history_title" />
@@ -23,9 +27,9 @@
     <item android:title="@string/nav_item_communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_tell"
                 android:icon="@drawable/ic_menu_share"
-                android:title="@string/nav_share_title" />
+                android:title="@string/nav_tell_title" />
         </menu>
     </item>
 

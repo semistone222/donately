@@ -1,80 +1,113 @@
 <resources>
-    <!--app name-->
     <string name="app_name">Donate.ly</string>
-
-    <!--onboaderpage-->
-    <string name="onboaderpage1_title">Donate easily</string>
-    <string name="onboaderpage1_description">You can easily donate anytime, anywhere.</string>
-    <string name="onboaderpage2_title">Watch Ads</string>
-    <string name="onboaderpage2_description">Just, watch advertisements and donate.</string>
-    <string name="onboaderpage3_title">Free</string>
-    <string name="onboaderpage3_description">Don\'t worry, everything is free.</string>
-
-    <!--beneficiaries description-->
-    <string name="save_animal_title">SAVE ANIMAL</string>
-    <string name="save_animal_description">There is a lot of abandoned or mistreated animals. They need your help.</string>
-    <string name="tap_to_donate">TAP TO DONATE</string>
-
-    <!--user info-->
+    <string name="intro1_title">Donate easily</string>
+    <string name="intro1_description">You can easily donate anytime, anywhere.</string>
+    <string name="intro2_title">Watch Ads</string>
+    <string name="intro2_description">Just, watch advertisements and donate.</string>
+    <string name="intro3_title">Free</string>
+    <string name="intro3_description">Don\'t worry, everything is free.</string>
     <string name="default_user_email">android.studio@android.com</string>
     <string name="default_user_name">Android Studio</string>
-
-    <!--menu-->
     <string name="action_settings">Settings</string>
-
-    <!--drawer-->
+    <string name="action_favorite">Favorite</string>
+    <string name="action_link">Link</string>
     <string name="nav_donate_title">Donate</string>
+    <string name="nav_favorite_title">Favorite</string>
     <string name="nav_history_title">History</string>
     <string name="nav_settings_title">Settings</string>
     <string name="nav_about_title">About</string>
-    <string name="nav_share_title">Share</string>
+    <string name="nav_tell_title">Tell a friend</string>
     <string name="nav_item_communicate">Communicate</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <!--login-->
+    <string name="nav_open">Open navigation drawer</string>
+    <string name="nav_close">Close navigation drawer</string>
     <string name="facebook_app_id" translatable="false">389316754760661</string>
-    <string name="title_activity_settings">Settings</string>
     <string name="facebook_login">Log in with Facebook</string>
     <string name="google_login">Log in with Google</string>
-
-    <!--activity-->
+    <string name="title_activity_favorite">Favorite</string>
     <string name="title_activity_history">History</string>
-
-    <!--notification-->
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_about">About</string>
+    <string name="title_activity_open_source">Open Source License</string>
+    <string name="title_activity_introduce">How we do</string>
     <string name="pref_notification_key" translatable="false">notification</string>
     <string name="pref_notification_summary">We notify everyday for your daily donation. Turn this on, plz :)</string>
     <string name="pref_notification_title">Enable everyday notifications</string>
     <string name="encourage_donation_notification_title">Time\'s up!</string>
     <string name="encourage_donation_notification_body">Are you ready to Donate.ly?</string>
-
-    <!--toast messages-->
     <string name="message_history">These are records you donated.</string>
-    <string name="login_canceled">login canceled.</string>
-    <string name="login_error">login error.</string>
-
-    <!--preference advertisement length-->
+    <string name="message_login_canceled">login canceled.</string>
+    <string name="message_login_error">login error.</string>
+    <string name="message_login_error_server">server not working.</string>
+    <string name="message_logout_success">logged out.</string>
+    <string name="message_advertisement_start">Ads start showing</string>
+    <string name="message_video_explanation">Donations are made to this advertisement.</string>
+    <string name="message_card_view_encourage">Tap heart to donate :)</string>
+    <string name="message_history_empty">No history yet, Try to donate!</string>
+    <string name="message_add_favorite">Added to Favorite.</string>
+    <string name="message_video_error">Failed to load ads.</string>
+    <string name="message_empty">Not yet. Visit later again, plz.</string>
+    <string name="message_thank_title">Thank you!</string>
+    <string name="message_thank_detail">You just donated %1$dP, Thanks for your help.</string>
     <string name="pref_advertisement_length_key" translatable="false">advertisement-length</string>
     <string name="pref_advertisement_length_title">Advertisement length</string>
-    <string name="pref_advertisement_length_60">60</string>
-    <string name="pref_advertisement_length_30">30</string>
     <string name="pref_advertisement_length_15">15</string>
+    <string name="pref_advertisement_length_30">30</string>
+    <string name="pref_advertisement_length_60">60</string>
     <string-array name="pref_advertisement_length_list_titles">
-        <item>60 seconds</item>
-        <item>30 seconds</item>
         <item>15 seconds</item>
+        <item>30 seconds</item>
+        <item>60 seconds</item>
     </string-array>
     <string-array name="pref_advertisement_length_list_values">
-        <item>@string/pref_advertisement_length_60</item>
-        <item>@string/pref_advertisement_length_30</item>
         <item>@string/pref_advertisement_length_15</item>
+        <item>@string/pref_advertisement_length_30</item>
+        <item>@string/pref_advertisement_length_60</item>
     </string-array>
-
-    <!--preference logout-->
     <string name="pref_logout_title">Logout</string>
     <string name="pref_logout_key" translatable="false">logout</string>
-
-    <!--content description-->
+    <string name="pref_open_source_key" translatable="false">pref-open-source-key</string>
+    <string name="pref_open_source_title">Open Source License</string>
+    <string name="pref_open_source_summary">open source software about detailed license information</string>
+    <string name="pref_introduce_key" translatable="false">pref-introduce-key</string>
+    <string name="pref_introduce_title">How we do</string>
+    <string name="pref_version_key" translatable="false">pref-version-key</string>
+    <string name="pref_version_title">Version</string>
+    <string name="pref_version_summary">1.0.0</string>
     <string name="cd_user_image">user image</string>
     <string name="cd_divider">divider</string>
+    <string name="cd_app_image">app image</string>
+    <string name="cd_beneficiary_image">beneficiary image</string>
+    <string name="video_current_playing_time_key" translatable="false">video-current-playing-time</string>
+    <string name="show_case_web_site" translatable="false">https://semistone222.github.io/donately/</string>
+    <string name="tell_a_friend">Tell a Friend</string>
+    <string name="point_key" translatable="false">point-key</string>
+    <string name="beneficiary_key" translatable="false">beneficiary-key</string>
+    <string-array name="open_source_list">
+        <item>Android Open Source Project</item>
+        <item>Butter Knife</item>
+        <item>Facebook SDK for Android</item>
+        <item>Glide</item>
+        <item>Glide Transformations</item>
+        <item>Realm</item>
+        <item>Google APIs for Mobile</item>
+        <item>paolorotolo AppIntro</item>
+        <item>Retrofit</item>
+        <item>lovelydialog</item>
+        <item>AndroidVideoCache</item>
+    </string-array>
+    <string name="button_donate">Donate</string>
+    <string name="item_title">Palais Garnier</string>
+    <string name="item_desc">The Palais Garnier which locates in Paris was built from 1861 for
+        the Paris Opera.
+    </string>
+    <string name="title_desc">Description</string>
+    <string name="detail_desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+        deserunt mollit anim id est laborum.
+    </string>
+    <string name="title_desc2">Item</string>
+    <string name="detail_desc2">"8 Rue Scribe, 75009 Paris, France"</string>
 </resources>

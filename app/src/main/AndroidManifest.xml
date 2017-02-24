@@ -4,15 +4,16 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="false">
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -22,12 +23,29 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".detail.DetailActivity"
+            android:parentActivityName=".main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".favorite.FavoriteActivity"
+            android:label="@string/title_activity_favorite"
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.main.MainActivity" />
+        </activity>
+        <activity
             android:name=".intro.IntroActivity"
-            android:theme="@style/AppTheme.NoTitle"></activity>
+            android:theme="@style/AppTheme.Intro" />
         <activity
             android:name=".history.HistoryActivity"
             android:label="@string/title_activity_history"
@@ -45,6 +63,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.semistone.donately.main.MainActivity" />
         </activity>
+        <activity
+            android:name=".video.VideoActivity"
+            android:theme="@style/AppTheme.Video" />
+        <activity
+            android:name=".about.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".about.OpenSourceActivity"
+            android:label="@string/title_activity_open_source"
+            android:parentActivityName=".about.AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.about.AboutActivity" />
+        </activity>
+        <activity
+            android:name=".about.IntroduceActivity"
+            android:label="@string/title_activity_introduce"
+            android:parentActivityName=".about.AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.semistone.donately.about.AboutActivity" />
+        </activity>
 
         <service android:name=".background.BootService" />
 
@@ -60,4 +105,5 @@
             android:name=".background.NotificationReceiver"
             android:process=":remote" />
     </application>
+
 </manifest>

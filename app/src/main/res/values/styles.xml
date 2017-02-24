@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,6 +16,16 @@
 
     <style name="AppTheme.NoTitle">
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Intro" parent="AppTheme.NoTitle">
+        <item name="android:background">@color/colorBackground</item>
+    </style>
+
+    <style name="AppTheme.Video" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
     </style>
 
     <style name="LoginButton">

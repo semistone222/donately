@@ -135,8 +135,8 @@ public class OrgFragment extends Fragment {
             Glide.with(mContext).load(content.getPictureUrl()).into(holder.image);
             holder.title.setText(content.getTitle());
             holder.description.setText(content.getDescription());
-            holder.fundProgressBar.setProgress(content.getCurrentPoint());
             holder.fundProgressBar.setMax(content.getGoal());
+            holder.fundProgressBar.setProgress(content.getCurrentPoint());
             holder.progressText.setText(PointUtils.getProgressPercent(content.getCurrentPoint(), content.getGoal()));
             holder.progressText2.setText(PointUtils.getProgressPercent2(content.getCurrentPoint(), content.getGoal()));
             holder.favoriteToggleButton.setChecked(content.isFavorite());

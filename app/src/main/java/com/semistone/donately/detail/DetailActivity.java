@@ -67,7 +67,6 @@ public class DetailActivity extends AppCompatActivity {
     private Content mContent;
     private int mContentId;
     private User mUser;
-    private boolean isFirst = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,11 +105,6 @@ public class DetailActivity extends AppCompatActivity {
         mFavoriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isFirst) {
-                    isFirst = false;
-                    return;
-                }
-
                 if (isChecked) {
                     Call<Favorite> insertFavorite = NetworkManager.service.insertFavorite(mUser.getId(), mContent.getId());
                     insertFavorite.enqueue(new Callback<Favorite>() {

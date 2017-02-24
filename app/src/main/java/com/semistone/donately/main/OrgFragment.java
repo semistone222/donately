@@ -132,6 +132,10 @@ public class OrgFragment extends Fragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             final Content content = mContents.get(position);
+            Activity activity = (Activity) mContext;
+            if(activity.isFinishing()) {
+                return;
+            }
             Glide.with(mContext).load(content.getPictureUrl()).into(holder.image);
             holder.title.setText(content.getTitle());
             holder.description.setText(content.getDescription());

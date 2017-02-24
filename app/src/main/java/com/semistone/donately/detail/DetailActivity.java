@@ -153,6 +153,9 @@ public class DetailActivity extends AppCompatActivity {
 
     private void updateUI() {
         mCollapsingToolbarLayout.setTitle(mContent.getTitle());
+        if(this.isFinishing()) {
+            return;
+        }
         Glide.with(this).load(mContent.getPictureUrl()).into(mImageView);
         mTextViewTitle.setText(mContent.getTitle());
         mTextViewDetail.setText(mContent.getDescription());

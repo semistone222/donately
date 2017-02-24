@@ -1,35 +1,20 @@
 /*
-	Directive by HTML5 UP
+	Read Only by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
 /* Basic */
 
-	hr {
-		border-top: solid 1px #cccccc;
-	}
-
-	blockquote {
-		border-left: solid 0.5em #cccccc;
-	}
-
-/* Section/Article */
-
-	header.major {
-		border-color: #cccccc;
-	}
-
-		header.major p {
-			border-top: solid 1px #cccccc;
-		}
-
-	footer.major {
-		border-color: #cccccc;
-	}
-
-/* Button */
-
+	code,
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	select,
+	textarea,
+	.box,
+	.image,
+	.image img,
 	input[type="submit"],
 	input[type="reset"],
 	input[type="button"],
@@ -38,90 +23,38 @@
 		-ms-behavior: url("assets/js/ie/PIE.htc");
 	}
 
-		input[type="submit"].alt,
-		input[type="reset"].alt,
-		input[type="button"].alt,
-		.button.alt {
-			border: solid 1px #cccccc;
-		}
-
 /* Form */
 
 	input[type="text"],
 	input[type="password"],
 	input[type="email"],
-	select,
-	textarea {
-		position: relative;
-		border: solid 1px #cccccc;
-		-ms-behavior: url("assets/js/ie/PIE.htc");
+	select {
+		line-height: 2.75em;
 	}
 
-/* Image */
-
-	.image {
-		border: 0;
-		display: inline-block;
-		position: relative;
+	input[type="checkbox"],
+	input[type="radio"] {
+		-moz-appearance: normal;
+		-webkit-appearance: normal;
+		-ms-appearance: normal;
+		appearance: normal;
 	}
 
-		.image:after {
-			display: none;
+		input[type="checkbox"] + label,
+		input[type="radio"] + label {
+			padding: 0 0 0 1.5em;
 		}
 
-/* Box */
+			input[type="checkbox"] + label:before,
+			input[type="radio"] + label:before {
+				display: none;
+			}
 
-	.box {
-		border: solid 1px #cccccc;
-	}
+/* Button */
 
-/* Header */
-
-	#header {
-		background-image: url("../../images/header.jpg") !important;
-		background-size: cover !important;
-		background-position: scroll !important;
-		-ms-behavior: url("assets/js/ie/backgroundsize.min.htc");
-		padding: 8em 0 !important;
-		color: #ffffff;
-	}
-
-		#header a {
-			color: inherit;
-		}
-
-		#header:before {
-			content: '';
-			background-image: url("images/overlay.png");
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			display: block;
-			z-index: 0;
-		}
-
-		#header > * {
-			position: relative;
-			z-index: 1;
-		}
-
-		#header .logo {
-			-ms-behavior: url("assets/js/ie/PIE.htc");
-		}
-
-/* Footer */
-
-	#footer {
-		background-image: none !important;
-		margin-top: 0 !important;
-		padding: 4em 0 !important;
-		color: #ffffff;
-	}
-
-/* Main */
-
-	#main {
-		padding: 4em 0;
+	input[type="submit"].alt,
+	input[type="reset"].alt,
+	input[type="button"].alt,
+	.button.alt {
+		border: solid 2px #e4e4e4;
 	}

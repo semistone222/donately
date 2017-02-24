@@ -94,6 +94,7 @@ public class DetailActivity extends AppCompatActivity {
                 mContent = content;
                 Log.e("semistone", "onResponse: " + content.toString());
                 updateUI();
+                setListener();
             }
 
             @Override
@@ -101,7 +102,9 @@ public class DetailActivity extends AppCompatActivity {
                 Log.e("semistone", "onFailure: ");
             }
         });
+    }
 
+    private void setListener() {
         mFavoriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

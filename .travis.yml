@@ -5,7 +5,6 @@ android:
   components:
     - tools
     - platform-tools
-    - tools
     - build-tools-25.0.2
     - android-25
     - extra-google-m2repository
@@ -17,12 +16,10 @@ before_script:
   - emulator -avd test -no-skin -no-audio -no-window &
   - adb wait-for-device
   - adb shell input keyevent 82 &
-  - chmod +x /donately/gradlew
+  - chmod +x gradlew
   
-script:
-  - cd /donately/gradlew
-  - assemble
-  
+script: ./gradlew assemble
+
 licenses:
   - 'android-sdk-preview-license-.+'
   - 'android-sdk-license-.+'

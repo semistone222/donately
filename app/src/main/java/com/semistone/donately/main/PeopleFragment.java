@@ -65,9 +65,7 @@ public class PeopleFragment extends Fragment {
         View view = inflater.inflate(R.layout.recycler_view, container, false);
         ButterKnife.bind(this, view);
         mContents = new ArrayList<>();
-        mAdapter = new Adapter(getContext(), mContents);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         mRealm = Realm.getDefaultInstance();
         mUser = mRealm.where(User.class).findFirst();
@@ -78,7 +76,8 @@ public class PeopleFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        mAdapter = new Adapter(getContext(), mContents);
+        mRecyclerView.setAdapter(mAdapter);
         Call<List<Content>> getContents = NetworkManager.service.getContentsByType(mUser.getId(), NAME);
         getContents.enqueue(new Callback<List<Content>>() {
             @Override
